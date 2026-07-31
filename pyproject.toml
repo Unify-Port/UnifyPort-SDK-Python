@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "unifyport-sdk"
+dynamic = ["version"]
+description = "Type-safe Python SDK for the UnifyPort Device API."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "UnifyPort" }]
+keywords = ["unifyport", "sdk", "device-api", "python"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = [
+  "httpx>=0.27,<1",
+  # Python 3.11-3.13 通过 backport 表达 PEP 728 open TypedDict。
+  "typing-extensions>=4.13,<5",
+]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2,<2",
+  "mypy>=1.13,<3",
+  "pip-audit>=2.7,<3",
+  "pytest>=8.3,<10",
+  "pytest-asyncio>=0.24,<2",
+  "pytest-cov>=6,<8",
+  # 生成链解析冻结的 YAML contract；运行时不依赖它。
+  "PyYAML>=6,<7",
+  "ruff>=0.9,<1",
+  "twine>=6,<8",
+]
+
+[project.urls]
+Homepage = "https://www.unifyport.ai"
+Repository = "https://github.com/Unify-Port/UnifyPort-SDK-Python"
+Issues = "https://github.com/Unify-Port/UnifyPort-SDK-Python/issues"
+
+[tool.hatch.version]
+# package metadata 与 runtime 共用单一版本来源，避免 release 时只改一处。
+path = "src/unifyport/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unifyport"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/.github",
+  "/contracts",
+  "/docs",
+  "/parity",
+  "/policy",
+  "/scripts",
+  "/src",
+  "/tests",
+  "/typing_tests",
+  "/pyright_tests",
+  "/AGENTS.md",
+  "/CHANGELOG.md",
+  "/LICENSE",
+  "/README.md",
+  "/README.zh-CN.md",
+  "/pyproject.toml",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# 生成文件优先保持模板稳定，公开类型仍由 mypy 和 parity gate 验证。
+"src/unifyport/_generated/*.py" = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src", "scripts", "typing_tests"]
+
+[tool.pyright]
+# 独立 gate 只验证 mypy 2.3 尚未覆盖的 PEP 728 public contract。
+include = ["pyright_tests"]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers --cov=unifyport --cov-report=term-missing --cov-fail-under=85"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["unifyport"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = [
+  "if TYPE_CHECKING:",
+  "if typing.TYPE_CHECKING:",
+  "raise NotImplementedError",
+]

@@ -1,0 +1,2974 @@
+{
+  "schemaVersion": 1,
+  "nodeSdk": {
+    "package": "@unifyport/sdk-node",
+    "version": "0.4.0",
+    "repository": "https://github.com/Unify-Port/UnifyPort-SDK-Nodejs.git",
+    "tag": "v0.4.0",
+    "commit": "03d9b371b9fecfb8dae0d9e1182de69874267286",
+    "acceptanceCommit": "9a1b6ea61ae4fe023c0aeb5a6f80a79c79e0e230"
+  },
+  "contractSha256": "30e3bd1a0c0fd1f0df244a89786a2b19e2acd4cad377f3742805acd5d1b946ba",
+  "operationCount": 64,
+  "schemaCount": 70,
+  "policyCounts": {
+    "retryable": 19,
+    "destructive": 7,
+    "secretInput": 8,
+    "secretOutput": 12,
+    "mcpEligible": 4,
+    "pythonMcpExposed": 0
+  },
+  "pythonMcp": {
+    "enabled": false,
+    "exposedOperationCount": 0
+  },
+  "operations": {
+    "blockContact": {
+      "operationId": "blockContact",
+      "pythonMethod": "block_contact",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/contacts/block",
+      "tag": "Contacts",
+      "summary": "封锁联系人",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ContactIdRequest",
+        "pythonModel": "BlockContactRequestBody"
+      },
+      "responseSchema": "BlockContactResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "cancelAccountAuth": {
+      "operationId": "cancelAccountAuth",
+      "pythonMethod": "cancel_account_auth",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/cancel",
+      "tag": "Account Auth",
+      "summary": "取消授权流程",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "CancelAccountAuthRequestBody"
+      },
+      "responseSchema": "CancelAccountAuthResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "checkAccountQrAuth": {
+      "operationId": "checkAccountQrAuth",
+      "pythonMethod": "check_account_qr_auth",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/qr/check",
+      "tag": "Account Auth",
+      "summary": "检查二维码授权结果",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "CheckAccountQrAuthRequestBody"
+      },
+      "responseSchema": "CheckAccountQrAuthResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "createAccount": {
+      "operationId": "createAccount",
+      "pythonMethod": "create_account",
+      "method": "POST",
+      "path": "/v1/accounts",
+      "tag": "Accounts",
+      "summary": "创建账号",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "AccountRequest",
+        "pythonModel": "CreateAccountRequestBody"
+      },
+      "responseSchema": "CreateAccountResponse",
+      "responseContractType": "ResponseEnvelope[Account]"
+    },
+    "createApiKey": {
+      "operationId": "createApiKey",
+      "pythonMethod": "create_api_key",
+      "method": "POST",
+      "path": "/v1/api-keys",
+      "tag": "API Keys",
+      "summary": "创建 API Key",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "APIKeyCreateRequest",
+        "pythonModel": "CreateApiKeyRequestBody"
+      },
+      "responseSchema": "CreateApiKeyResponse",
+      "responseContractType": "ResponseEnvelope[APIKeyCreateResult]"
+    },
+    "createGroup": {
+      "operationId": "createGroup",
+      "pythonMethod": "create_group",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/groups/create",
+      "tag": "Groups",
+      "summary": "创建群组",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "GroupCreateRequest",
+        "pythonModel": "CreateGroupRequestBody"
+      },
+      "responseSchema": "CreateGroupResponse",
+      "responseContractType": "ResponseEnvelope[GroupCreateResult]"
+    },
+    "createWebhookEndpoint": {
+      "operationId": "createWebhookEndpoint",
+      "pythonMethod": "create_webhook_endpoint",
+      "method": "POST",
+      "path": "/v1/webhook-endpoints",
+      "tag": "Webhook Endpoints",
+      "summary": "创建 webhook endpoint",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "WebhookEndpointRequest",
+        "pythonModel": "CreateWebhookEndpointRequestBody"
+      },
+      "responseSchema": "CreateWebhookEndpointResponse",
+      "responseContractType": "ResponseEnvelope[WebhookEndpoint]"
+    },
+    "deactivateWebhookEndpoint": {
+      "operationId": "deactivateWebhookEndpoint",
+      "pythonMethod": "deactivate_webhook_endpoint",
+      "method": "POST",
+      "path": "/v1/webhook-endpoints/{endpoint_id}/deactivate",
+      "tag": "Webhook Endpoints",
+      "summary": "停用 webhook endpoint",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "endpoint_id",
+          "pythonName": "endpoint_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "DeactivateWebhookEndpointResponse",
+      "responseContractType": "ResponseEnvelope[WebhookEndpoint]"
+    },
+    "deleteAccount": {
+      "operationId": "deleteAccount",
+      "pythonMethod": "delete_account",
+      "method": "DELETE",
+      "path": "/v1/accounts/{account_id}",
+      "tag": "Accounts",
+      "summary": "删除账号",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "DeleteAccountResponse",
+      "responseContractType": "None"
+    },
+    "deleteConversationLabel": {
+      "operationId": "deleteConversationLabel",
+      "pythonMethod": "delete_conversation_label",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/labels/delete",
+      "tag": "Conversations",
+      "summary": "删除会话标签",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationLabelDeleteRequest",
+        "pythonModel": "DeleteConversationLabelRequestBody"
+      },
+      "responseSchema": "DeleteConversationLabelResponse",
+      "responseContractType": "ResponseEnvelope[ConversationLabelDeleteResult]"
+    },
+    "deleteWebhookEndpoint": {
+      "operationId": "deleteWebhookEndpoint",
+      "pythonMethod": "delete_webhook_endpoint",
+      "method": "DELETE",
+      "path": "/v1/webhook-endpoints/{endpoint_id}",
+      "tag": "Webhook Endpoints",
+      "summary": "删除 webhook endpoint",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "endpoint_id",
+          "pythonName": "endpoint_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "DeleteWebhookEndpointResponse",
+      "responseContractType": "None"
+    },
+    "editMessage": {
+      "operationId": "editMessage",
+      "pythonMethod": "edit_message",
+      "method": "POST",
+      "path": "/v1/messages/edit",
+      "tag": "Messages",
+      "summary": "编辑消息文本",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "MessageEditRequest",
+        "pythonModel": "EditMessageRequestBody"
+      },
+      "responseSchema": "EditMessageResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "getAccount": {
+      "operationId": "getAccount",
+      "pythonMethod": "get_account",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}",
+      "tag": "Accounts",
+      "summary": "获取账号详情",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetAccountResponse",
+      "responseContractType": "ResponseEnvelope[Account]"
+    },
+    "getAccountAuthState": {
+      "operationId": "getAccountAuthState",
+      "pythonMethod": "get_account_auth_state",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/auth",
+      "tag": "Account Auth",
+      "summary": "获取账号授权状态",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetAccountAuthStateResponse",
+      "responseContractType": "ResponseEnvelope[AccountSession]"
+    },
+    "getContact": {
+      "operationId": "getContact",
+      "pythonMethod": "get_contact",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/contacts/info",
+      "tag": "Contacts",
+      "summary": "获取联系人详情",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "contact_id",
+          "pythonName": "contact_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetContactResponse",
+      "responseContractType": "ResponseEnvelope[Contact]"
+    },
+    "getConversation": {
+      "operationId": "getConversation",
+      "pythonMethod": "get_conversation",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/conversations/info",
+      "tag": "Conversations",
+      "summary": "获取会话详情",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "conversation_id",
+          "pythonName": "conversation_id",
+          "required": true,
+          "schema": "str"
+        },
+        {
+          "name": "type",
+          "pythonName": "type",
+          "required": false,
+          "schema": "ConversationType"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetConversationResponse",
+      "responseContractType": "ResponseEnvelope[Conversation]"
+    },
+    "getGroup": {
+      "operationId": "getGroup",
+      "pythonMethod": "get_group",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/groups/info",
+      "tag": "Groups",
+      "summary": "获取群组详情",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "group_id",
+          "pythonName": "group_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetGroupResponse",
+      "responseContractType": "ResponseEnvelope[Group]"
+    },
+    "getGroupInviteCode": {
+      "operationId": "getGroupInviteCode",
+      "pythonMethod": "get_group_invite_code",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/groups/invite-code",
+      "tag": "Groups",
+      "summary": "获取群邀请链接或邀请码",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "group_id",
+          "pythonName": "group_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetGroupInviteCodeResponse",
+      "responseContractType": "ResponseEnvelope[GroupInviteCode]"
+    },
+    "getWebhookEndpoint": {
+      "operationId": "getWebhookEndpoint",
+      "pythonMethod": "get_webhook_endpoint",
+      "method": "GET",
+      "path": "/v1/webhook-endpoints/{endpoint_id}",
+      "tag": "Webhook Endpoints",
+      "summary": "获取 webhook endpoint",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "endpoint_id",
+          "pythonName": "endpoint_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetWebhookEndpointResponse",
+      "responseContractType": "ResponseEnvelope[WebhookEndpoint]"
+    },
+    "getWorkspace": {
+      "operationId": "getWorkspace",
+      "pythonMethod": "get_workspace",
+      "method": "GET",
+      "path": "/v1/workspace",
+      "tag": "Workspace",
+      "summary": "获取当前 workspace",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "read",
+      "mcpEligible": true,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetWorkspaceResponse",
+      "responseContractType": "ResponseEnvelope[Workspace]"
+    },
+    "importAccountAuthSession": {
+      "operationId": "importAccountAuthSession",
+      "pythonMethod": "import_account_auth_session",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/session",
+      "tag": "Account Auth",
+      "summary": "导入会话授权",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "ImportAccountAuthSessionRequestBody"
+      },
+      "responseSchema": "ImportAccountAuthSessionResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "leaveGroup": {
+      "operationId": "leaveGroup",
+      "pythonMethod": "leave_group",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/groups/leave",
+      "tag": "Groups",
+      "summary": "退出群组",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "GroupIdRequest",
+        "pythonModel": "LeaveGroupRequestBody"
+      },
+      "responseSchema": "LeaveGroupResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "listAccounts": {
+      "operationId": "listAccounts",
+      "pythonMethod": "list_accounts",
+      "method": "GET",
+      "path": "/v1/accounts",
+      "tag": "Accounts",
+      "summary": "列出账号",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListAccountsResponse",
+      "responseContractType": "ResponseEnvelope[list[Account]]"
+    },
+    "listApiKeys": {
+      "operationId": "listApiKeys",
+      "pythonMethod": "list_api_keys",
+      "method": "GET",
+      "path": "/v1/api-keys",
+      "tag": "API Keys",
+      "summary": "列出 API Key",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "read",
+      "mcpEligible": true,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListApiKeysResponse",
+      "responseContractType": "ResponseEnvelope[list[APIKey]]"
+    },
+    "listContactBlocklist": {
+      "operationId": "listContactBlocklist",
+      "pythonMethod": "list_contact_blocklist",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/contacts/blocklist",
+      "tag": "Contacts",
+      "summary": "查询联系人黑名单",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListContactBlocklistResponse",
+      "responseContractType": "ResponseEnvelope[ContactBlocklistResult]"
+    },
+    "listContacts": {
+      "operationId": "listContacts",
+      "pythonMethod": "list_contacts",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/contacts",
+      "tag": "Contacts",
+      "summary": "列出联系人",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        },
+        {
+          "name": "q",
+          "pythonName": "q",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "updated_since",
+          "pythonName": "updated_since",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListContactsResponse",
+      "responseContractType": "ResponseEnvelope[ContactListResult]"
+    },
+    "listConversationLabels": {
+      "operationId": "listConversationLabels",
+      "pythonMethod": "list_conversation_labels",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/conversations/labels",
+      "tag": "Conversations",
+      "summary": "列出会话标签",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListConversationLabelsResponse",
+      "responseContractType": "ResponseEnvelope[ConversationLabelListResult]"
+    },
+    "listConversationMembers": {
+      "operationId": "listConversationMembers",
+      "pythonMethod": "list_conversation_members",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/conversations/members",
+      "tag": "Conversations",
+      "summary": "列出会话成员",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "conversation_id",
+          "pythonName": "conversation_id",
+          "required": true,
+          "schema": "str"
+        },
+        {
+          "name": "type",
+          "pythonName": "type",
+          "required": false,
+          "schema": "ConversationType"
+        },
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListConversationMembersResponse",
+      "responseContractType": "ResponseEnvelope[ConversationMemberListResult]"
+    },
+    "listConversations": {
+      "operationId": "listConversations",
+      "pythonMethod": "list_conversations",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/conversations",
+      "tag": "Conversations",
+      "summary": "列出会话",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "type",
+          "pythonName": "type",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        },
+        {
+          "name": "label_id",
+          "pythonName": "label_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListConversationsResponse",
+      "responseContractType": "ResponseEnvelope[ConversationListResult]"
+    },
+    "listGroupJoinRequests": {
+      "operationId": "listGroupJoinRequests",
+      "pythonMethod": "list_group_join_requests",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/groups/join-requests",
+      "tag": "Groups",
+      "summary": "列出待审批入群申请",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "group_id",
+          "pythonName": "group_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListGroupJoinRequestsResponse",
+      "responseContractType": "ResponseEnvelope[GroupJoinRequestsResult]"
+    },
+    "listGroups": {
+      "operationId": "listGroups",
+      "pythonMethod": "list_groups",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/groups",
+      "tag": "Groups",
+      "summary": "列出群组",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListGroupsResponse",
+      "responseContractType": "ResponseEnvelope[GroupListResult]"
+    },
+    "listProviderRegions": {
+      "operationId": "listProviderRegions",
+      "pythonMethod": "list_provider_regions",
+      "method": "GET",
+      "path": "/v1/providers/{provider}/regions",
+      "tag": "Providers",
+      "summary": "查询 provider 地区可用性",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "read",
+      "mcpEligible": true,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "provider",
+          "pythonName": "provider",
+          "required": true,
+          "schema": "ProviderName"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListProviderRegionsResponse",
+      "responseContractType": "ResponseEnvelope[ProviderRegionsResponse]"
+    },
+    "listWebhookEndpoints": {
+      "operationId": "listWebhookEndpoints",
+      "pythonMethod": "list_webhook_endpoints",
+      "method": "GET",
+      "path": "/v1/webhook-endpoints",
+      "tag": "Webhook Endpoints",
+      "summary": "列出 webhook endpoint",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": true,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListWebhookEndpointsResponse",
+      "responseContractType": "ResponseEnvelope[list[WebhookEndpoint]]"
+    },
+    "markConversationRead": {
+      "operationId": "markConversationRead",
+      "pythonMethod": "mark_conversation_read",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/read",
+      "tag": "Conversations",
+      "summary": "标记会话已读",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationReadRequest",
+        "pythonModel": "MarkConversationReadRequestBody"
+      },
+      "responseSchema": "MarkConversationReadResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "markConversationUnread": {
+      "operationId": "markConversationUnread",
+      "pythonMethod": "mark_conversation_unread",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/unread",
+      "tag": "Conversations",
+      "summary": "标记会话未读",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationIdRequest",
+        "pythonModel": "MarkConversationUnreadRequestBody"
+      },
+      "responseSchema": "MarkConversationUnreadResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "muteConversation": {
+      "operationId": "muteConversation",
+      "pythonMethod": "mute_conversation",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/mute",
+      "tag": "Conversations",
+      "summary": "静音会话",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationMuteRequest",
+        "pythonModel": "MuteConversationRequestBody"
+      },
+      "responseSchema": "MuteConversationResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "pinConversation": {
+      "operationId": "pinConversation",
+      "pythonMethod": "pin_conversation",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/pin",
+      "tag": "Conversations",
+      "summary": "置顶会话",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationIdRequest",
+        "pythonModel": "PinConversationRequestBody"
+      },
+      "responseSchema": "PinConversationResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "pinMessage": {
+      "operationId": "pinMessage",
+      "pythonMethod": "pin_message",
+      "method": "POST",
+      "path": "/v1/messages/pin",
+      "tag": "Messages",
+      "summary": "置顶或取消置顶消息",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "MessagePinRequest",
+        "pythonModel": "PinMessageRequestBody"
+      },
+      "responseSchema": "PinMessageResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "reactMessage": {
+      "operationId": "reactMessage",
+      "pythonMethod": "react_message",
+      "method": "POST",
+      "path": "/v1/messages/reaction",
+      "tag": "Messages",
+      "summary": "给消息加表情回应或取消回应",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "MessageReactionRequest",
+        "pythonModel": "ReactMessageRequestBody"
+      },
+      "responseSchema": "ReactMessageResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "reconnectAccountRuntime": {
+      "operationId": "reconnectAccountRuntime",
+      "pythonMethod": "reconnect_account_runtime",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/runtime/reconnect",
+      "tag": "Account Runtime",
+      "summary": "重连账号运行态",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "ReconnectAccountRuntimeRequestBody"
+      },
+      "responseSchema": "ReconnectAccountRuntimeResponse",
+      "responseContractType": "ResponseEnvelope[RuntimeActionResult]"
+    },
+    "refreshAccountRuntime": {
+      "operationId": "refreshAccountRuntime",
+      "pythonMethod": "refresh_account_runtime",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/runtime/refresh",
+      "tag": "Account Runtime",
+      "summary": "刷新账号运行态",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "RefreshAccountRuntimeRequestBody"
+      },
+      "responseSchema": "RefreshAccountRuntimeResponse",
+      "responseContractType": "ResponseEnvelope[RuntimeActionResult]"
+    },
+    "revokeMessage": {
+      "operationId": "revokeMessage",
+      "pythonMethod": "revoke_message",
+      "method": "POST",
+      "path": "/v1/messages/revoke",
+      "tag": "Messages",
+      "summary": "撤回消息",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "MessageRevokeRequest",
+        "pythonModel": "RevokeMessageRequestBody"
+      },
+      "responseSchema": "RevokeMessageResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "rotateApiKey": {
+      "operationId": "rotateApiKey",
+      "pythonMethod": "rotate_api_key",
+      "method": "POST",
+      "path": "/v1/api-keys/{key_id}/rotate",
+      "tag": "API Keys",
+      "summary": "轮换 API Key",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "key_id",
+          "pythonName": "key_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "APIKeyCreateRequest",
+        "pythonModel": "RotateApiKeyRequestBody"
+      },
+      "responseSchema": "RotateApiKeyResponse",
+      "responseContractType": "ResponseEnvelope[APIKeyCreateResult]"
+    },
+    "sendMessage": {
+      "operationId": "sendMessage",
+      "pythonMethod": "send_message",
+      "method": "POST",
+      "path": "/v1/messages",
+      "tag": "Messages",
+      "summary": "发送消息",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "SendMessageRequest",
+        "pythonModel": "SendMessageRequestBody"
+      },
+      "responseSchema": "SendMessageResponse",
+      "responseContractType": "ResponseEnvelope[SendMessageResult]"
+    },
+    "setContactNote": {
+      "operationId": "setContactNote",
+      "pythonMethod": "set_contact_note",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/contacts/note",
+      "tag": "Contacts",
+      "summary": "设置或清空联系人备注",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ContactNoteRequest",
+        "pythonModel": "SetContactNoteRequestBody"
+      },
+      "responseSchema": "SetContactNoteResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "setConversationLabelMembers": {
+      "operationId": "setConversationLabelMembers",
+      "pythonMethod": "set_conversation_label_members",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/labels",
+      "tag": "Conversations",
+      "summary": "给会话打标或移除标签",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationLabelMembersRequest",
+        "pythonModel": "SetConversationLabelMembersRequestBody"
+      },
+      "responseSchema": "SetConversationLabelMembersResponse",
+      "responseContractType": "ResponseEnvelope[ConversationLabelMembersResult]"
+    },
+    "setGroupJoinApprovalMode": {
+      "operationId": "setGroupJoinApprovalMode",
+      "pythonMethod": "set_group_join_approval_mode",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/groups/join-approval-mode",
+      "tag": "Groups",
+      "summary": "设置入群审批模式",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "GroupJoinApprovalModeRequest",
+        "pythonModel": "SetGroupJoinApprovalModeRequestBody"
+      },
+      "responseSchema": "SetGroupJoinApprovalModeResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "startAccountAuth": {
+      "operationId": "startAccountAuth",
+      "pythonMethod": "start_account_auth",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/start",
+      "tag": "Account Auth",
+      "summary": "启动验证码类授权",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "StartAccountAuthRequestBody"
+      },
+      "responseSchema": "StartAccountAuthResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "startAccountQrAuth": {
+      "operationId": "startAccountQrAuth",
+      "pythonMethod": "start_account_qr_auth",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/qr/start",
+      "tag": "Account Auth",
+      "summary": "启动二维码授权",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "StartAccountQrAuthRequestBody"
+      },
+      "responseSchema": "StartAccountQrAuthResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "startAccountRuntime": {
+      "operationId": "startAccountRuntime",
+      "pythonMethod": "start_account_runtime",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/runtime/start",
+      "tag": "Account Runtime",
+      "summary": "启动账号运行态",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "StartAccountRuntimeRequestBody"
+      },
+      "responseSchema": "StartAccountRuntimeResponse",
+      "responseContractType": "ResponseEnvelope[RuntimeActionResult]"
+    },
+    "stopAccountRuntime": {
+      "operationId": "stopAccountRuntime",
+      "pythonMethod": "stop_account_runtime",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/runtime/stop",
+      "tag": "Account Runtime",
+      "summary": "停止账号运行态",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "StopAccountRuntimeRequestBody"
+      },
+      "responseSchema": "StopAccountRuntimeResponse",
+      "responseContractType": "ResponseEnvelope[RuntimeActionResult]"
+    },
+    "submitAccountAuthCode": {
+      "operationId": "submitAccountAuthCode",
+      "pythonMethod": "submit_account_auth_code",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/code",
+      "tag": "Account Auth",
+      "summary": "提交验证码",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "SubmitAccountAuthCodeRequestBody"
+      },
+      "responseSchema": "SubmitAccountAuthCodeResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "submitAccountAuthPassword": {
+      "operationId": "submitAccountAuthPassword",
+      "pythonMethod": "submit_account_auth_password",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/password",
+      "tag": "Account Auth",
+      "summary": "提交二次密码",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": false,
+        "schema": "FreeFormObject",
+        "pythonModel": "SubmitAccountAuthPasswordRequestBody"
+      },
+      "responseSchema": "SubmitAccountAuthPasswordResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
+    "unblockContact": {
+      "operationId": "unblockContact",
+      "pythonMethod": "unblock_contact",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/contacts/unblock",
+      "tag": "Contacts",
+      "summary": "解封联系人",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ContactIdRequest",
+        "pythonModel": "UnblockContactRequestBody"
+      },
+      "responseSchema": "UnblockContactResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "unmuteConversation": {
+      "operationId": "unmuteConversation",
+      "pythonMethod": "unmute_conversation",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/unmute",
+      "tag": "Conversations",
+      "summary": "取消静音会话",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationIdRequest",
+        "pythonModel": "UnmuteConversationRequestBody"
+      },
+      "responseSchema": "UnmuteConversationResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "unpinConversation": {
+      "operationId": "unpinConversation",
+      "pythonMethod": "unpin_conversation",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/unpin",
+      "tag": "Conversations",
+      "summary": "取消置顶会话",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationIdRequest",
+        "pythonModel": "UnpinConversationRequestBody"
+      },
+      "responseSchema": "UnpinConversationResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "updateAccount": {
+      "operationId": "updateAccount",
+      "pythonMethod": "update_account",
+      "method": "PATCH",
+      "path": "/v1/accounts/{account_id}",
+      "tag": "Accounts",
+      "summary": "更新账号",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "AccountRequest",
+        "pythonModel": "UpdateAccountRequestBody"
+      },
+      "responseSchema": "UpdateAccountResponse",
+      "responseContractType": "ResponseEnvelope[Account]"
+    },
+    "updateApiKeyStatus": {
+      "operationId": "updateApiKeyStatus",
+      "pythonMethod": "update_api_key_status",
+      "method": "PATCH",
+      "path": "/v1/api-keys/{key_id}",
+      "tag": "API Keys",
+      "summary": "更新 API Key 状态",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "write",
+      "mcpEligible": true,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "key_id",
+          "pythonName": "key_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "APIKeyStatusUpdateRequest",
+        "pythonModel": "UpdateApiKeyStatusRequestBody"
+      },
+      "responseSchema": "UpdateApiKeyStatusResponse",
+      "responseContractType": "ResponseEnvelope[APIKey]"
+    },
+    "updateGroupInfo": {
+      "operationId": "updateGroupInfo",
+      "pythonMethod": "update_group_info",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/groups/update-info",
+      "tag": "Groups",
+      "summary": "修改群信息",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "GroupInfoUpdateRequest",
+        "pythonModel": "UpdateGroupInfoRequestBody"
+      },
+      "responseSchema": "UpdateGroupInfoResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "updateGroupJoinRequests": {
+      "operationId": "updateGroupJoinRequests",
+      "pythonMethod": "update_group_join_requests",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/groups/join-requests/update",
+      "tag": "Groups",
+      "summary": "处理入群申请",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "GroupJoinRequestsUpdateRequest",
+        "pythonModel": "UpdateGroupJoinRequestsRequestBody"
+      },
+      "responseSchema": "UpdateGroupJoinRequestsResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "updateGroupMembers": {
+      "operationId": "updateGroupMembers",
+      "pythonMethod": "update_group_members",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/groups/members",
+      "tag": "Groups",
+      "summary": "管理群成员",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "GroupMemberUpdateRequest",
+        "pythonModel": "UpdateGroupMembersRequestBody"
+      },
+      "responseSchema": "UpdateGroupMembersResponse",
+      "responseContractType": "ResponseEnvelope[OkData]"
+    },
+    "updateWebhookEndpoint": {
+      "operationId": "updateWebhookEndpoint",
+      "pythonMethod": "update_webhook_endpoint",
+      "method": "PATCH",
+      "path": "/v1/webhook-endpoints/{endpoint_id}",
+      "tag": "Webhook Endpoints",
+      "summary": "更新 webhook endpoint",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "endpoint_id",
+          "pythonName": "endpoint_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "WebhookEndpointRequest",
+        "pythonModel": "UpdateWebhookEndpointRequestBody"
+      },
+      "responseSchema": "UpdateWebhookEndpointResponse",
+      "responseContractType": "ResponseEnvelope[WebhookEndpoint]"
+    },
+    "updateWorkspace": {
+      "operationId": "updateWorkspace",
+      "pythonMethod": "update_workspace",
+      "method": "PATCH",
+      "path": "/v1/workspace",
+      "tag": "Workspace",
+      "summary": "更新当前 workspace",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "WorkspaceUpdateRequest",
+        "pythonModel": "UpdateWorkspaceRequestBody"
+      },
+      "responseSchema": "UpdateWorkspaceResponse",
+      "responseContractType": "ResponseEnvelope[Workspace]"
+    },
+    "upsertConversationLabel": {
+      "operationId": "upsertConversationLabel",
+      "pythonMethod": "upsert_conversation_label",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/labels/upsert",
+      "tag": "Conversations",
+      "summary": "新建或更新会话标签",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationLabelUpsertRequest",
+        "pythonModel": "UpsertConversationLabelRequestBody"
+      },
+      "responseSchema": "UpsertConversationLabelResponse",
+      "responseContractType": "ResponseEnvelope[ConversationLabel]"
+    }
+  },
+  "schemas": {
+    "APIKey": {
+      "pythonModel": "APIKey",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "APIKeyCreateRequest": {
+      "pythonModel": "APIKeyCreateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "APIKeyCreateResult": {
+      "pythonModel": "APIKeyCreateResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "APIKeyStatusUpdateRequest": {
+      "pythonModel": "APIKeyStatusUpdateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Account": {
+      "pythonModel": "Account",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountRequest": {
+      "pythonModel": "AccountRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountSession": {
+      "pythonModel": "AccountSession",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AuthField": {
+      "pythonModel": "AuthField",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Contact": {
+      "pythonModel": "Contact",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactBlocklistResult": {
+      "pythonModel": "ContactBlocklistResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactCard": {
+      "pythonModel": "ContactCard",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactEmail": {
+      "pythonModel": "ContactEmail",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactIdRequest": {
+      "pythonModel": "ContactIdRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactListResult": {
+      "pythonModel": "ContactListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactNoteRequest": {
+      "pythonModel": "ContactNoteRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactPhone": {
+      "pythonModel": "ContactPhone",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Conversation": {
+      "pythonModel": "Conversation",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationIdRequest": {
+      "pythonModel": "ConversationIdRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabel": {
+      "pythonModel": "ConversationLabel",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabelDeleteRequest": {
+      "pythonModel": "ConversationLabelDeleteRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabelDeleteResult": {
+      "pythonModel": "ConversationLabelDeleteResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabelListResult": {
+      "pythonModel": "ConversationLabelListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabelMembersRequest": {
+      "pythonModel": "ConversationLabelMembersRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabelMembersResult": {
+      "pythonModel": "ConversationLabelMembersResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationLabelUpsertRequest": {
+      "pythonModel": "ConversationLabelUpsertRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationListResult": {
+      "pythonModel": "ConversationListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationMember": {
+      "pythonModel": "ConversationMember",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationMemberListResult": {
+      "pythonModel": "ConversationMemberListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationMuteRequest": {
+      "pythonModel": "ConversationMuteRequest",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "ConversationReadRequest": {
+      "pythonModel": "ConversationReadRequest",
+      "kind": "allOf",
+      "dependentRequired": {
+        "up_to_message_id": [
+          "up_to_message_sender_id"
+        ],
+        "up_to_message_sender_id": [
+          "up_to_message_id"
+        ]
+      }
+    },
+    "ConversationType": {
+      "pythonModel": "ConversationType",
+      "kind": "enum",
+      "dependentRequired": {}
+    },
+    "Error": {
+      "pythonModel": "Error",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ErrorEnvelope": {
+      "pythonModel": "ErrorEnvelope",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "FreeFormObject": {
+      "pythonModel": "FreeFormObject",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Group": {
+      "pythonModel": "Group",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupCreateRequest": {
+      "pythonModel": "GroupCreateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupCreateResult": {
+      "pythonModel": "GroupCreateResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupIdRequest": {
+      "pythonModel": "GroupIdRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupInfoUpdateRequest": {
+      "pythonModel": "GroupInfoUpdateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupInviteCode": {
+      "pythonModel": "GroupInviteCode",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupJoinApprovalModeRequest": {
+      "pythonModel": "GroupJoinApprovalModeRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupJoinRequest": {
+      "pythonModel": "GroupJoinRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupJoinRequestsResult": {
+      "pythonModel": "GroupJoinRequestsResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupJoinRequestsUpdateRequest": {
+      "pythonModel": "GroupJoinRequestsUpdateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupListResult": {
+      "pythonModel": "GroupListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupMemberUpdateRequest": {
+      "pythonModel": "GroupMemberUpdateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Mention": {
+      "pythonModel": "Mention",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageEditRequest": {
+      "pythonModel": "MessageEditRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePayload": {
+      "pythonModel": "MessagePayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePinRequest": {
+      "pythonModel": "MessagePinRequest",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageReactionRequest": {
+      "pythonModel": "MessageReactionRequest",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageRevokeRequest": {
+      "pythonModel": "MessageRevokeRequest",
+      "kind": "alias",
+      "dependentRequired": {}
+    },
+    "MessageTargetRequest": {
+      "pythonModel": "MessageTargetRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "OkData": {
+      "pythonModel": "OkData",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ProviderName": {
+      "pythonModel": "ProviderName",
+      "kind": "enum",
+      "dependentRequired": {}
+    },
+    "ProviderProfile": {
+      "pythonModel": "ProviderProfile",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ProviderRegionsResponse": {
+      "pythonModel": "ProviderRegionsResponse",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Recipient": {
+      "pythonModel": "Recipient",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "RegionAvailability": {
+      "pythonModel": "RegionAvailability",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ReplyTo": {
+      "pythonModel": "ReplyTo",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ResponseMeta": {
+      "pythonModel": "ResponseMeta",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "RuntimeActionResult": {
+      "pythonModel": "RuntimeActionResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "RuntimeStatus": {
+      "pythonModel": "RuntimeStatus",
+      "kind": "enum",
+      "dependentRequired": {}
+    },
+    "SendMessageRequest": {
+      "pythonModel": "SendMessageRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "SendMessageResult": {
+      "pythonModel": "SendMessageResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "StandardEventType": {
+      "pythonModel": "StandardEventType",
+      "kind": "enum",
+      "dependentRequired": {}
+    },
+    "WebhookEndpoint": {
+      "pythonModel": "WebhookEndpoint",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WebhookEndpointRequest": {
+      "pythonModel": "WebhookEndpointRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Workspace": {
+      "pythonModel": "Workspace",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WorkspaceUpdateRequest": {
+      "pythonModel": "WorkspaceUpdateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    }
+  }
+}
