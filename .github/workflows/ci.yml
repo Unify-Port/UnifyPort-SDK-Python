@@ -25,8 +25,8 @@ jobs:
         with:
           node-version: "24"
       - name: Upgrade packaging installer
-        # pip-audit 会审计当前环境，先更新 runner 自带 pip，避免工具链漏洞污染 SDK 审计结论。
-        run: python -m pip install --upgrade pip
+        # pip-audit 会审计当前环境，先更新 runner 自带打包工具，避免已修复漏洞污染 SDK 审计结论。
+        run: python -m pip install --upgrade pip "setuptools>=83"
       - name: Install project
         run: python -m pip install -e ".[dev]"
       - name: Check generated files
