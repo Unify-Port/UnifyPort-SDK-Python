@@ -24,6 +24,13 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Check public repository boundary
+        # Node parity 基准包含其自身的发布配置，先扫描本仓库，避免只读上游 checkout 污染公开边界结论。
+        run: python scripts/check_public.py
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           repository: Unify-Port/UnifyPort-SDK-Nodejs
@@ -31,10 +38,6 @@ jobs:
           fetch-depth: 0
           path: node-sdk
           persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
-        with:
-          python-version: "3.11"
-          cache: pip
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: "24"
@@ -58,8 +61,6 @@ jobs:
         run: python scripts/check_node_parity.py --node-repo node-sdk --node-ref v0.4.0
       - name: Check documentation
         run: python scripts/check_docs.py
-      - name: Check public repository boundary
-        run: python scripts/check_public.py
       - name: Check format
         run: ruff format --check .
       - name: Lint
