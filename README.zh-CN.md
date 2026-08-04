@@ -9,7 +9,7 @@ contract 生成，当前对齐 `@unifyport/sdk-node` `v0.4.0`：64 个 operation
 以及相同的 retry 和 secret 分类。
 
 Python distribution 名为 `unifyport-sdk`，import package 为 `unifyport`。本仓库从 SDK `0.1.0`
-开始；发布 PyPI 是独立 release 动作，不能由 Git tag 或本地 build 代替。
+开始；仅有 Git tag 或本地 build 不能证明该版本已进入 PyPI。
 
 ## 环境要求
 
@@ -17,13 +17,13 @@ Python distribution 名为 `unifyport-sdk`，import package 为 `unifyport`。�
 - `httpx` `>=0.27,<1`
 - `typing-extensions` `>=4.13,<5`，用于 Python 3.11-3.13 的 PEP 728 backport
 
-首次 registry release 准备期间，可从 checkout 安装：
+从 PyPI 安装已发布版本：
 
 ```bash
-python -m pip install .
+python -m pip install unifyport-sdk
 ```
 
-开发安装：
+从源码 checkout 开发安装：
 
 ```bash
 python -m pip install -e ".[dev]"

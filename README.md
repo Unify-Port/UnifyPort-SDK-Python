@@ -9,7 +9,7 @@ the approved public OpenAPI contract and currently tracks `@unifyport/sdk-node` 
 70 component schemas, and the same retry and secret-handling classifications.
 
 The Python package is `unifyport-sdk`; the import package is `unifyport`. This repository starts at SDK
-version `0.1.0`. Publishing to PyPI is a separate release action and is not implied by a Git tag or build.
+version `0.1.0`. A Git tag or local build alone does not prove that a version reached PyPI.
 
 ## Requirements
 
@@ -17,13 +17,13 @@ version `0.1.0`. Publishing to PyPI is a separate release action and is not impl
 - `httpx` `>=0.27,<1`
 - `typing-extensions` `>=4.13,<5` for the Python 3.11-3.13 PEP 728 backport
 
-Install from a checkout while the first registry release is being prepared:
+Install the published package from PyPI:
 
 ```bash
-python -m pip install .
+python -m pip install unifyport-sdk
 ```
 
-For development:
+To work from a source checkout:
 
 ```bash
 python -m pip install -e ".[dev]"
