@@ -93,66 +93,10 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-  publish-testpypi:
-    name: Publish to TestPyPI
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/unifyport-sdk
-    permissions:
-      id-token: write
-    steps:
-      # publish job 不 checkout 或执行仓库代码，只上传 build job 已验收的 immutable artifact。
-      - name: Download distributions
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
-        with:
-          name: unifyport-sdk-dist-${{ github.ref_name }}
-          path: dist/
-      - name: Publish distributions to TestPyPI
-        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          print-hash: true
-          # TestPyPI 只承担演练；允许同一 tag 的失败 run 安全重跑，生产 PyPI 不跳过重复版本。
-          skip-existing: true
-
-  verify-testpypi:
-    name: Verify TestPyPI installation
-    needs: [build, publish-testpypi]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
-        with:
-          python-version: "3.11"
-      - name: Install exact TestPyPI version
-        env:
-          PACKAGE_VERSION: ${{ needs.build.outputs.version }}
-        run: |
-          python -m venv /tmp/unifyport-testpypi-venv
-          /tmp/unifyport-testpypi-venv/bin/python -m pip install "httpx>=0.27,<1" "typing-extensions>=4.13,<5"
-          for attempt in {1..12}; do
-            if /tmp/unifyport-testpypi-venv/bin/python -m pip install \
-              --index-url https://test.pypi.org/simple/ \
-              --no-deps "unifyport-sdk==$PACKAGE_VERSION"; then
-              break
-            fi
-            if [ "$attempt" -eq 12 ]; then
-              exit 1
-            fi
-            sleep 10
-          done
-      - name: Smoke test TestPyPI installation
-        run: /tmp/unifyport-testpypi-venv/bin/python scripts/smoke_installed.py
-
   publish-pypi:
     name: Publish to PyPI
-    needs: [build, verify-testpypi]
+    # 用户确认首发跳过 TestPyPI；仍由 build 全门禁与 pypi environment 审批保护正式发布。
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: pypi
@@ -160,7 +104,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      # production publish 只接收同一 run 的已验证 artifact，并由 pypi environment 提供人工审批门禁。
+      # production publish 只接收同一 run 的 build 验收 artifact，并由 pypi environment 提供人工审批门禁。
       - name: Download distributions
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
