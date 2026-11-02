@@ -75,7 +75,7 @@ class UnifyPortResponseParseError(UnifyPortError):
 class UnifyPortApiError(UnifyPortError):
     """Raised for non-success HTTP responses."""
 
-    __slots__ = ("status", "code", "request_id", "details")
+    __slots__ = ("status", "code", "numeric_code", "request_id", "details")
 
     def __init__(
         self,
@@ -84,11 +84,14 @@ class UnifyPortApiError(UnifyPortError):
         code: str,
         operation_id: str | None = None,
         request_id: str | None = None,
+        numeric_code: str | None = None,
     ) -> None:
         message = f"UnifyPort API returned {code} (HTTP {status})"
         super().__init__(_operation_message(message, operation_id), operation_id=operation_id)
         self.status = status
         self.code = code
+        # 可选字段保持旧构造调用兼容，不让原始错误文本进入公开对象。
+        self.numeric_code = numeric_code
         self.request_id = request_id
         # 上游 details 常回显输入，保留属性兼容性但永远不保留原值。
         self.details: None = None

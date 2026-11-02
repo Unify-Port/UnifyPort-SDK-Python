@@ -21,7 +21,7 @@ flowchart LR
 
 ## 来源边界
 
-- `contracts/device.openapi.yaml` 是唯一协议输入。它冻结自公开 Node SDK `v0.4.0` contract，而不是
+- `contracts/device.openapi.yaml` 是唯一协议输入。它冻结自公开 Node SDK `parity/source.json` 记录的 approved-source contract，而不是
   内部 service repository。
 - `policy/operation-policies.json` 保存无法从 OpenAPI 安全推导的 retry、mutability、secret、header
   和 Node MCP parity 信息。
@@ -31,7 +31,7 @@ flowchart LR
 
 ## 公开 runtime
 
-`UnifyPortDeviceClient` 与 `AsyncUnifyPortDeviceClient` 提供相同的 64 个 snake_case method。generated
+`UnifyPortDeviceClient` 与 `AsyncUnifyPortDeviceClient` 提供相同的 78 个 snake_case method。generated
 method 将 Python 输入位置转换为一次内部 execution call；client 不手写协议 path。runtime 随后校验 URL
 边界和输入、解析 API key、应用 operation policy、发送请求、限制 response、解析 JSON，并返回经过筛选的
 metadata。

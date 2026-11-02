@@ -8,12 +8,14 @@ import hashlib
 import json
 import keyword
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
 
 import yaml  # type: ignore[import-untyped]
+from schema_types import structural_schemas
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_PATH = ROOT / "contracts/device.openapi.yaml"
@@ -26,9 +28,9 @@ CHINESE_REFERENCE_DIR = ROOT / "docs/zh-CN/api-reference"
 HTTP_METHODS = ("get", "put", "post", "delete", "options", "head", "patch", "trace")
 EXPECTED_POLICY_COUNTS = {
     "retryable": 19,
-    "destructive": 7,
-    "secretInput": 8,
-    "secretOutput": 12,
+    "destructive": 8,
+    "secretInput": 9,
+    "secretOutput": 16,
     "mcpEligible": 4,
     "pythonMcpExposed": 0,
 }
@@ -178,14 +180,17 @@ def _collect_parameters(
 
 def _success_schema(document: JsonObject, operation: JsonObject) -> JsonObject | None:
     responses = _object(operation.get("responses", {}), "operation responses")
+    schemas: list[JsonObject] = []
     for status in sorted(responses):
         if not re.fullmatch(r"2\d\d", status):
             continue
         response = _resolve_ref(document, _object(responses[status], f"response {status}"))
         schema = _json_schema(response.get("content"))
-        if schema is not None:
-            return schema
-    return None
+        schemas.append(schema if schema is not None else {"type": "null"})
+    # 成功状态的空响应必须进入联合类型，不能把 202 accepted 与 204 混为一谈。
+    if not schemas or schemas == [{"type": "null"}]:
+        return None
+    return schemas[0] if len(schemas) == 1 else {"anyOf": schemas}
 
 
 def _collect_operations(
@@ -330,13 +335,29 @@ def _validate_policy(operations: list[Operation], policy: JsonObject) -> None:
 
 
 def _schema_type(
-    schema: JsonObject | None,
+    schema: JsonObject | bool | None,
     *,
     model_prefix: str = "",
     quote_refs: bool = False,
 ) -> str:
     if schema is None:
         return "None"
+    if schema is False:
+        return "Never"
+    if schema is True:
+        return "JsonValue"
+    if schema.get("x-python-never"):
+        return "Never"
+    for composition in ("oneOf", "anyOf"):
+        variants = schema.get(composition)
+        if isinstance(variants, list) and variants:
+            alternatives = [
+                _schema_type(part, model_prefix=model_prefix, quote_refs=quote_refs)
+                for part in variants
+            ]
+            return (
+                "Union[" + ", ".join(alternatives) + "]" if quote_refs else " | ".join(alternatives)
+            )
     ref_name = _ref_name(schema)
     if ref_name is not None:
         reference = f"{model_prefix}{ref_name}"
@@ -345,7 +366,7 @@ def _schema_type(
     if isinstance(enum, list) and enum:
         return f"Literal[{', '.join(_python_literal(value) for value in enum)}]"
     const = schema.get("const")
-    if const is not None:
+    if "const" in schema:
         return f"Literal[{_python_literal(const)}]"
     schema_type = schema.get("type")
     if isinstance(schema_type, list):
@@ -430,8 +451,12 @@ def _flatten_schema(
     raw_properties = schema.get("properties", {})
     if isinstance(raw_properties, dict):
         for property_name, raw_property in raw_properties.items():
-            if isinstance(property_name, str) and isinstance(raw_property, dict):
-                properties[property_name] = _object(raw_property, f"{name}.{property_name}")
+            if isinstance(property_name, str) and isinstance(raw_property, (dict, bool)):
+                properties[property_name] = (
+                    raw_property
+                    if isinstance(raw_property, dict)
+                    else ({"x-python-never": True} if raw_property is False else {})
+                )
     raw_required = schema.get("required", [])
     if isinstance(raw_required, list):
         required.update(value for value in raw_required if isinstance(value, str))
@@ -482,10 +507,12 @@ def _generate_models(schemas: JsonObject, operations: list[Operation]) -> str:
         "    Final,",
         "    Generic,",
         "    Literal,",
+        "    Never,",
         "    NotRequired,",
         "    Required,",
         "    TypeAlias,",
         "    TypeVar,",
+        "    Union,",
         ")",
         "",
         "from typing_extensions import TypedDict",
@@ -505,11 +532,12 @@ def _generate_models(schemas: JsonObject, operations: list[Operation]) -> str:
     ]
     dependencies: dict[str, dict[str, tuple[str, ...]]] = {}
     aliases: list[tuple[str, str]] = []
-    for name in sorted(schemas):
-        schema = _object(schemas[name], f"schema {name}")
+    definitions = structural_schemas(schemas)
+    for name in sorted(definitions):
+        schema = _object(definitions[name], f"schema {name}")
         ref_name = _ref_name(schema)
         enum = schema.get("enum")
-        properties, required, dependent_required = _flatten_schema(name, schema, schemas)
+        properties, required, dependent_required = _flatten_schema(name, schema, definitions)
         if dependent_required:
             dependencies[name] = dependent_required
         if ref_name is not None:
@@ -521,15 +549,29 @@ def _generate_models(schemas: JsonObject, operations: list[Operation]) -> str:
             lines.extend(f"    {_python_literal(value)}," for value in enum)
             lines.extend(["]", "", ""])
             continue
+        if "anyOf" in schema or "oneOf" in schema:
+            aliases.append((name, _schema_type(schema, quote_refs=True)))
+            continue
         if not properties:
             lines.extend([f"{name}: TypeAlias = {_schema_type(schema)}", "", ""])
+            continue
+        if any(not field.isidentifier() or keyword.iskeyword(field) for field in properties):
+            # 带连字符的 provider key 必须保留原名，函数式 TypedDict 不会把协议键改写成标识符。
+            lines.extend([f"{name} = TypedDict(", f"    {_python_literal(name)},", "    {"])
+            for field in sorted(properties):
+                wrapper = "Required" if field in required else "NotRequired"
+                annotation = _schema_type(properties[field], quote_refs=True)
+                lines.append(f"        {_python_literal(field)}: {wrapper}[{annotation}],")
+            lines.extend(["    },", "    total=False,", ")", "", ""])
             continue
         if schema.get("additionalProperties") is True:
             lines.extend(
                 [
                     "# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。",
-                    f"class {name}(TypedDict, total=False, extra_items=JsonValue):  "
-                    "# type: ignore[call-arg, unused-ignore]",
+                    # 格式化后忽略标记仍要落在 class 首行，mypy 的诊断不会定位到右括号。
+                    f"class {name}(  # type: ignore[call-arg, unused-ignore]",
+                    "    TypedDict, total=False, extra_items=JsonValue",
+                    "):",
                 ]
             )
         else:
@@ -568,7 +610,13 @@ def _generate_models(schemas: JsonObject, operations: list[Operation]) -> str:
     lines.extend(["SCHEMA_NAMES: Final = ("])
     lines.extend(f"    {_python_literal(name)}," for name in schema_names)
     lines.extend([")", "", ""])
-    lines.extend(["DEPENDENT_REQUIRED: Final = MappingProxyType(", "    {"])
+    lines.extend(
+        [
+            "DEPENDENT_REQUIRED: Final[MappingProxyType[str, "
+            "MappingProxyType[str, tuple[str, ...]]]] = MappingProxyType(",
+            "    {",
+        ]
+    )
     for schema_name, fields in sorted(dependencies.items()):
         lines.extend(
             [
@@ -593,7 +641,7 @@ def _generate_models(schemas: JsonObject, operations: list[Operation]) -> str:
             '    "SCHEMA_NAMES",',
             '    "JsonScalar",',
             '    "JsonValue",',
-            *[f"    {_python_literal(name)}," for name in schema_names],
+            *[f"    {_python_literal(name)}," for name in sorted(definitions)],
             *[f"    {_python_literal(name)}," for name in operation_model_names],
             "]",
             "",
@@ -605,6 +653,12 @@ def _generate_models(schemas: JsonObject, operations: list[Operation]) -> str:
 def _response_type(schema: JsonObject | None, *, model_prefix: str = "") -> str:
     if schema is None:
         return "None"
+    alternatives = schema.get("anyOf")
+    if isinstance(alternatives, list):
+        return " | ".join(
+            _response_type(_object(part, "response variant"), model_prefix=model_prefix)
+            for part in alternatives
+        )
     all_of = schema.get("allOf")
     if isinstance(all_of, list):
         has_meta = any(
@@ -880,6 +934,9 @@ def _generate_methods(operations: list[Operation], *, asynchronous: bool) -> str
         "",
         "# recursive JsonValue 会按 method module namespace 求值，因此保留运行时名称。",
         "from .models import JsonValue  # noqa: F401",
+        "",
+        "# 联合别名里的 ForwardRef 按方法 namespace 解析，补齐生成模型名称以支持 introspection。",
+        "globals().update({name: getattr(_models, name) for name in _models.__all__})",
         "",
         "",
         f"class {class_name}:",
@@ -1242,6 +1299,20 @@ def generate_artifacts() -> dict[Path, str]:
         artifacts[CHINESE_REFERENCE_DIR / filename] = _generate_reference_page(
             operation, chinese=True
         )
+    # 复杂联合与 PEP 728 注解交给固定版本格式化器，生成检查和普通格式检查使用同一结果。
+    for path, content in list(artifacts.items()):
+        if path.suffix == ".py":
+            result = subprocess.run(
+                [sys.executable, "-m", "ruff", "format", "--stdin-filename", str(path), "-"],
+                input=content,
+                text=True,
+                capture_output=True,
+                cwd=ROOT,
+                check=False,
+            )
+            if result.returncode != 0:
+                raise RuntimeError("unable to format generated Python source")
+            artifacts[path] = result.stdout
     return artifacts
 
 

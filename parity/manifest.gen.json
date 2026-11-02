@@ -4,18 +4,18 @@
     "package": "@unifyport/sdk-node",
     "version": "0.4.0",
     "repository": "https://github.com/Unify-Port/UnifyPort-SDK-Nodejs.git",
-    "tag": "v0.4.0",
-    "commit": "03d9b371b9fecfb8dae0d9e1182de69874267286",
-    "acceptanceCommit": "9a1b6ea61ae4fe023c0aeb5a6f80a79c79e0e230"
+    "commit": "5901244c409f63fd6b77a899c239ebc9ee96dd50",
+    "baselineKind": "approved-source",
+    "ref": "5901244c409f63fd6b77a899c239ebc9ee96dd50"
   },
-  "contractSha256": "30e3bd1a0c0fd1f0df244a89786a2b19e2acd4cad377f3742805acd5d1b946ba",
-  "operationCount": 64,
-  "schemaCount": 70,
+  "contractSha256": "47face9790a454fb0d6204721785846427ca7ead23cf854061ab54646682e904",
+  "operationCount": 78,
+  "schemaCount": 218,
   "policyCounts": {
     "retryable": 19,
-    "destructive": 7,
-    "secretInput": 8,
-    "secretOutput": 12,
+    "destructive": 8,
+    "secretInput": 9,
+    "secretOutput": 16,
     "mcpEligible": 4,
     "pythonMcpExposed": 0
   },
@@ -145,6 +145,43 @@
         "pythonModel": "CheckAccountQrAuthRequestBody"
       },
       "responseSchema": "CheckAccountQrAuthResponse",
+      "responseContractType": "ResponseEnvelope[QRAuthCheckData]"
+    },
+    "confirmAccountPasskey": {
+      "operationId": "confirmAccountPasskey",
+      "pythonMethod": "confirm_account_passkey",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/passkey-confirm",
+      "tag": "Account Auth",
+      "summary": "确认 Passkey 授权",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ConfirmAccountPasskeyResponse",
       "responseContractType": "ResponseEnvelope[FreeFormObject]"
     },
     "createAccount": {
@@ -167,6 +204,12 @@
       "queryParameters": [],
       "headerParameters": [
         {
+          "name": "Idempotency-Key",
+          "pythonName": "idempotency_key",
+          "required": false,
+          "schema": "str"
+        },
+        {
           "name": "X-Request-Id",
           "pythonName": "x_request_id",
           "required": false,
@@ -175,11 +218,48 @@
       ],
       "requestBody": {
         "required": true,
-        "schema": "AccountRequest",
+        "schema": "AccountCreateRequest",
         "pythonModel": "CreateAccountRequestBody"
       },
       "responseSchema": "CreateAccountResponse",
       "responseContractType": "ResponseEnvelope[Account]"
+    },
+    "createAccountAuthSession": {
+      "operationId": "createAccountAuthSession",
+      "pythonMethod": "create_account_auth_session",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth-sessions",
+      "tag": "Account Auth",
+      "summary": "创建 Provider 授权会话",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "CreateAccountAuthSessionResponse",
+      "responseContractType": "ResponseEnvelope[ProviderAuthSession]"
     },
     "createApiKey": {
       "operationId": "createApiKey",
@@ -214,6 +294,81 @@
       },
       "responseSchema": "CreateApiKeyResponse",
       "responseContractType": "ResponseEnvelope[APIKeyCreateResult]"
+    },
+    "createCall": {
+      "operationId": "createCall",
+      "pythonMethod": "create_call",
+      "method": "POST",
+      "path": "/v1/calls",
+      "tag": "Calls",
+      "summary": "准备主动通话",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "CreateCallRequest",
+        "pythonModel": "CreateCallRequestBody"
+      },
+      "responseSchema": "CreateCallResponse",
+      "responseContractType": "ResponseEnvelope[CreateCallData]"
+    },
+    "createContact": {
+      "operationId": "createContact",
+      "pythonMethod": "create_contact",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/contacts/add",
+      "tag": "Contacts",
+      "summary": "添加联系人",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ContactCreateRequest",
+        "pythonModel": "CreateContactRequestBody"
+      },
+      "responseSchema": "CreateContactResponse",
+      "responseContractType": "ResponseEnvelope[Contact]"
     },
     "createGroup": {
       "operationId": "createGroup",
@@ -314,7 +469,14 @@
           "schema": "str"
         }
       ],
-      "queryParameters": [],
+      "queryParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
       "headerParameters": [
         {
           "name": "X-Request-Id",
@@ -362,7 +524,7 @@
       ],
       "requestBody": null,
       "responseSchema": "DeleteAccountResponse",
-      "responseContractType": "None"
+      "responseContractType": "ResponseEnvelope[AccountOperation] | None"
     },
     "deleteConversationLabel": {
       "operationId": "deleteConversationLabel",
@@ -429,7 +591,14 @@
           "schema": "str"
         }
       ],
-      "queryParameters": [],
+      "queryParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
       "headerParameters": [
         {
           "name": "X-Request-Id",
@@ -550,6 +719,80 @@
       "responseSchema": "GetAccountAuthStateResponse",
       "responseContractType": "ResponseEnvelope[AccountSession]"
     },
+    "getAccountOperation": {
+      "operationId": "getAccountOperation",
+      "pythonMethod": "get_account_operation",
+      "method": "GET",
+      "path": "/v1/account-operations/{operation_id}",
+      "tag": "Accounts",
+      "summary": "查询账号计费操作",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "operation_id",
+          "pythonName": "operation_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetAccountOperationResponse",
+      "responseContractType": "ResponseEnvelope[AccountOperation]"
+    },
+    "getActiveCall": {
+      "operationId": "getActiveCall",
+      "pythonMethod": "get_active_call",
+      "method": "GET",
+      "path": "/v1/calls/active",
+      "tag": "Calls",
+      "summary": "查询账号当前活动通话",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetActiveCallResponse",
+      "responseContractType": "ResponseEnvelope[ActiveCallData | dict[str, JsonValue]]"
+    },
     "getContact": {
       "operationId": "getContact",
       "pythonMethod": "get_contact",
@@ -593,6 +836,50 @@
       "requestBody": null,
       "responseSchema": "GetContactResponse",
       "responseContractType": "ResponseEnvelope[Contact]"
+    },
+    "getContactMembership": {
+      "operationId": "getContactMembership",
+      "pythonMethod": "get_contact_membership",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/contacts/membership",
+      "tag": "Contacts",
+      "summary": "查询联系人是否在联系人列表中",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "contact_id",
+          "pythonName": "contact_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "GetContactMembershipResponse",
+      "responseContractType": "ResponseEnvelope[ContactMembership]"
     },
     "getConversation": {
       "operationId": "getConversation",
@@ -732,6 +1019,47 @@
       "responseSchema": "GetGroupInviteCodeResponse",
       "responseContractType": "ResponseEnvelope[GroupInviteCode]"
     },
+    "getPost": {
+      "operationId": "getPost",
+      "pythonMethod": "get_post",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/posts/info",
+      "tag": "Posts",
+      "summary": "获取帖子详情",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "PostInfoRequest",
+        "pythonModel": "GetPostRequestBody"
+      },
+      "responseSchema": "GetPostResponse",
+      "responseContractType": "ResponseEnvelope[Post]"
+    },
     "getWebhookEndpoint": {
       "operationId": "getWebhookEndpoint",
       "pythonMethod": "get_webhook_endpoint",
@@ -756,7 +1084,14 @@
           "schema": "str"
         }
       ],
-      "queryParameters": [],
+      "queryParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
       "headerParameters": [
         {
           "name": "X-Request-Id",
@@ -799,6 +1134,47 @@
       "responseSchema": "GetWorkspaceResponse",
       "responseContractType": "ResponseEnvelope[Workspace]"
     },
+    "hangupCall": {
+      "operationId": "hangupCall",
+      "pythonMethod": "hangup_call",
+      "method": "POST",
+      "path": "/v1/calls/{call_id}/hangup",
+      "tag": "Calls",
+      "summary": "挂断指定通话",
+      "authRequired": true,
+      "mutability": "destructive",
+      "retryable": false,
+      "destructive": true,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "call_id",
+          "pythonName": "call_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "dict[str, JsonValue]",
+        "pythonModel": "HangupCallRequestBody"
+      },
+      "responseSchema": "HangupCallResponse",
+      "responseContractType": "ResponseEnvelope[EndedCallData]"
+    },
     "importAccountAuthSession": {
       "operationId": "importAccountAuthSession",
       "pythonMethod": "import_account_auth_session",
@@ -834,7 +1210,7 @@
       ],
       "requestBody": {
         "required": false,
-        "schema": "FreeFormObject",
+        "schema": "SessionImportRequest",
         "pythonModel": "ImportAccountAuthSessionRequestBody"
       },
       "responseSchema": "ImportAccountAuthSessionResponse",
@@ -898,7 +1274,20 @@
       "mcpEligible": false,
       "pythonMcpExposure": "never",
       "pathParameters": [],
-      "queryParameters": [],
+      "queryParameters": [
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        },
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        }
+      ],
       "headerParameters": [
         {
           "name": "X-Request-Id",
@@ -909,7 +1298,7 @@
       ],
       "requestBody": null,
       "responseSchema": "ListAccountsResponse",
-      "responseContractType": "ResponseEnvelope[list[Account]]"
+      "responseContractType": "ResponseEnvelope[AccountListResult]"
     },
     "listApiKeys": {
       "operationId": "listApiKeys",
@@ -1308,6 +1697,97 @@
       "responseSchema": "ListGroupsResponse",
       "responseContractType": "ResponseEnvelope[GroupListResult]"
     },
+    "listPostComments": {
+      "operationId": "listPostComments",
+      "pythonMethod": "list_post_comments",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/posts/comments/list",
+      "tag": "Posts",
+      "summary": "列出帖子的一级评论",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "PostCommentListRequest",
+        "pythonModel": "ListPostCommentsRequestBody"
+      },
+      "responseSchema": "ListPostCommentsResponse",
+      "responseContractType": "ResponseEnvelope[PostCommentListResult]"
+    },
+    "listPosts": {
+      "operationId": "listPosts",
+      "pythonMethod": "list_posts",
+      "method": "GET",
+      "path": "/v1/accounts/{account_id}/posts",
+      "tag": "Posts",
+      "summary": "列出本账号帖子",
+      "authRequired": true,
+      "mutability": "read",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "cursor",
+          "pythonName": "cursor",
+          "required": false,
+          "schema": "str"
+        },
+        {
+          "name": "limit",
+          "pythonName": "limit",
+          "required": false,
+          "schema": "int"
+        }
+      ],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": null,
+      "responseSchema": "ListPostsResponse",
+      "responseContractType": "ResponseEnvelope[PostListResult]"
+    },
     "listProviderRegions": {
       "operationId": "listProviderRegions",
       "pythonMethod": "list_provider_regions",
@@ -1329,7 +1809,7 @@
           "name": "provider",
           "pythonName": "provider",
           "required": true,
-          "schema": "ProviderName"
+          "schema": "ProviderInputName"
         }
       ],
       "queryParameters": [],
@@ -1362,7 +1842,14 @@
       "mcpEligible": false,
       "pythonMcpExposure": "never",
       "pathParameters": [],
-      "queryParameters": [],
+      "queryParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
       "headerParameters": [
         {
           "name": "X-Request-Id",
@@ -1689,6 +2176,88 @@
       "responseSchema": "RefreshAccountRuntimeResponse",
       "responseContractType": "ResponseEnvelope[RuntimeActionResult]"
     },
+    "replyPostComment": {
+      "operationId": "replyPostComment",
+      "pythonMethod": "reply_post_comment",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/posts/comments/reply",
+      "tag": "Posts",
+      "summary": "发布一级评论或回复一级评论",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "PostCommentReplyRequest",
+        "pythonModel": "ReplyPostCommentRequestBody"
+      },
+      "responseSchema": "ReplyPostCommentResponse",
+      "responseContractType": "ResponseEnvelope[PostCommentReplyResult]"
+    },
+    "requestConversationHistory": {
+      "operationId": "requestConversationHistory",
+      "pythonMethod": "request_conversation_history",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/conversations/history/request",
+      "tag": "Conversations",
+      "summary": "请求补拉会话历史消息",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": false,
+      "secretOutput": false,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "ConversationHistoryRequest",
+        "pythonModel": "RequestConversationHistoryRequestBody"
+      },
+      "responseSchema": "RequestConversationHistoryResponse",
+      "responseContractType": "ResponseEnvelope[ConversationHistoryAccepted]"
+    },
     "revokeMessage": {
       "operationId": "revokeMessage",
       "pythonMethod": "revoke_message",
@@ -1960,7 +2529,7 @@
         "pythonModel": "StartAccountAuthRequestBody"
       },
       "responseSchema": "StartAccountAuthResponse",
-      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+      "responseContractType": "ResponseEnvelope[StartCodeAuthData]"
     },
     "startAccountQrAuth": {
       "operationId": "startAccountQrAuth",
@@ -2167,6 +2736,47 @@
       "responseSchema": "SubmitAccountAuthPasswordResponse",
       "responseContractType": "ResponseEnvelope[FreeFormObject]"
     },
+    "submitAccountPasskeyResponse": {
+      "operationId": "submitAccountPasskeyResponse",
+      "pythonMethod": "submit_account_passkey_response",
+      "method": "POST",
+      "path": "/v1/accounts/{account_id}/auth/passkey-response",
+      "tag": "Account Auth",
+      "summary": "提交 Passkey 凭证响应",
+      "authRequired": true,
+      "mutability": "write",
+      "retryable": false,
+      "destructive": false,
+      "secretInput": true,
+      "secretOutput": true,
+      "nodeMcpExposure": "never",
+      "mcpEligible": false,
+      "pythonMcpExposure": "never",
+      "pathParameters": [
+        {
+          "name": "account_id",
+          "pythonName": "account_id",
+          "required": true,
+          "schema": "str"
+        }
+      ],
+      "queryParameters": [],
+      "headerParameters": [
+        {
+          "name": "X-Request-Id",
+          "pythonName": "x_request_id",
+          "required": false,
+          "schema": "str"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "schema": "PasskeyResponseRequest",
+        "pythonModel": "SubmitAccountPasskeyResponseRequestBody"
+      },
+      "responseSchema": "SubmitAccountPasskeyResponseResponse",
+      "responseContractType": "ResponseEnvelope[FreeFormObject]"
+    },
     "unblockContact": {
       "operationId": "unblockContact",
       "pythonMethod": "unblock_contact",
@@ -2325,7 +2935,7 @@
       ],
       "requestBody": {
         "required": true,
-        "schema": "AccountRequest",
+        "schema": "AccountUpdateRequest",
         "pythonModel": "UpdateAccountRequestBody"
       },
       "responseSchema": "UpdateAccountResponse",
@@ -2635,11 +3245,31 @@
     },
     "Account": {
       "pythonModel": "Account",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "AccountBilling": {
+      "pythonModel": "AccountBilling",
       "kind": "object",
       "dependentRequired": {}
     },
-    "AccountRequest": {
-      "pythonModel": "AccountRequest",
+    "AccountCreateRequest": {
+      "pythonModel": "AccountCreateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountListResult": {
+      "pythonModel": "AccountListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountOperation": {
+      "pythonModel": "AccountOperation",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountProfileUpdatedWebhookEvent": {
+      "pythonModel": "AccountProfileUpdatedWebhookEvent",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2648,13 +3278,88 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "AccountStartedWebhookEvent": {
+      "pythonModel": "AccountStartedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountUpdateRequest": {
+      "pythonModel": "AccountUpdateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "AccountWebhookError": {
+      "pythonModel": "AccountWebhookError",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ActiveCallData": {
+      "pythonModel": "ActiveCallData",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "AuthField": {
       "pythonModel": "AuthField",
       "kind": "object",
       "dependentRequired": {}
     },
+    "CallAnsweredWebhookEvent": {
+      "pythonModel": "CallAnsweredWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallEndedWebhookEvent": {
+      "pythonModel": "CallEndedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallEventCall": {
+      "pythonModel": "CallEventCall",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallEventSender": {
+      "pythonModel": "CallEventSender",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallIncomingWebhookEvent": {
+      "pythonModel": "CallIncomingWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallMessage": {
+      "pythonModel": "CallMessage",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallMessageCall": {
+      "pythonModel": "CallMessageCall",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CallMessageReceivedWebhookEvent": {
+      "pythonModel": "CallMessageReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "CallMessageUpdatedWebhookEvent": {
+      "pythonModel": "CallMessageUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "CallMessageWebhookEvent": {
+      "pythonModel": "CallMessageWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "Contact": {
       "pythonModel": "Contact",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactAddressBook": {
+      "pythonModel": "ContactAddressBook",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2668,8 +3373,18 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "ContactCreateRequest": {
+      "pythonModel": "ContactCreateRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "ContactEmail": {
       "pythonModel": "ContactEmail",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactExtra": {
+      "pythonModel": "ContactExtra",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2683,6 +3398,16 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "ContactMembership": {
+      "pythonModel": "ContactMembership",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactMessagePayload": {
+      "pythonModel": "ContactMessagePayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "ContactNoteRequest": {
       "pythonModel": "ContactNoteRequest",
       "kind": "object",
@@ -2693,8 +3418,73 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "ContactUpdateChange": {
+      "pythonModel": "ContactUpdateChange",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactUpdateReference": {
+      "pythonModel": "ContactUpdateReference",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ContactUpdatedData": {
+      "pythonModel": "ContactUpdatedData",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "ContactUpdatedWebhookEvent": {
+      "pythonModel": "ContactUpdatedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "Conversation": {
       "pythonModel": "Conversation",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationDisappearingMessagesChange": {
+      "pythonModel": "ConversationDisappearingMessagesChange",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationDisappearingMessagesState": {
+      "pythonModel": "ConversationDisappearingMessagesState",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "ConversationDisappearingMessagesUpdatedWebhookEvent": {
+      "pythonModel": "ConversationDisappearingMessagesUpdatedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationHistoryAccepted": {
+      "pythonModel": "ConversationHistoryAccepted",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationHistoryBefore": {
+      "pythonModel": "ConversationHistoryBefore",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationHistoryMessage": {
+      "pythonModel": "ConversationHistoryMessage",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationHistoryRequest": {
+      "pythonModel": "ConversationHistoryRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationHistorySource": {
+      "pythonModel": "ConversationHistorySource",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationHistoryWebhookEvent": {
+      "pythonModel": "ConversationHistoryWebhookEvent",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2761,18 +3551,41 @@
     "ConversationReadRequest": {
       "pythonModel": "ConversationReadRequest",
       "kind": "allOf",
-      "dependentRequired": {
-        "up_to_message_id": [
-          "up_to_message_sender_id"
-        ],
-        "up_to_message_sender_id": [
-          "up_to_message_id"
-        ]
-      }
+      "dependentRequired": {}
+    },
+    "ConversationStateAccount": {
+      "pythonModel": "ConversationStateAccount",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationStateActor": {
+      "pythonModel": "ConversationStateActor",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ConversationStateReference": {
+      "pythonModel": "ConversationStateReference",
+      "kind": "object",
+      "dependentRequired": {}
     },
     "ConversationType": {
       "pythonModel": "ConversationType",
       "kind": "enum",
+      "dependentRequired": {}
+    },
+    "CreateCallData": {
+      "pythonModel": "CreateCallData",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "CreateCallRequest": {
+      "pythonModel": "CreateCallRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "EndedCallData": {
+      "pythonModel": "EndedCallData",
+      "kind": "object",
       "dependentRequired": {}
     },
     "Error": {
@@ -2792,6 +3605,11 @@
     },
     "Group": {
       "pythonModel": "Group",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupAnnouncementChange": {
+      "pythonModel": "GroupAnnouncementChange",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2817,6 +3635,11 @@
     },
     "GroupInviteCode": {
       "pythonModel": "GroupInviteCode",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupInviteLinkChange": {
+      "pythonModel": "GroupInviteLinkChange",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2850,9 +3673,94 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "GroupPermissions": {
+      "pythonModel": "GroupPermissions",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupSettingsEvent": {
+      "pythonModel": "GroupSettingsEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupSettingsUpdatedWebhookEvent": {
+      "pythonModel": "GroupSettingsUpdatedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "GroupUpdatedChange": {
+      "pythonModel": "GroupUpdatedChange",
+      "kind": "unknown",
+      "dependentRequired": {}
+    },
+    "LinkPreviewMessagePayload": {
+      "pythonModel": "LinkPreviewMessagePayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MediaMessagePayload": {
+      "pythonModel": "MediaMessagePayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "Mention": {
       "pythonModel": "Mention",
       "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageCommerce": {
+      "pythonModel": "MessageCommerce",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageCommerceHTTPURL": {
+      "pythonModel": "MessageCommerceHTTPURL",
+      "kind": "string",
+      "dependentRequired": {}
+    },
+    "MessageCommerceHistoryWebhookEvent": {
+      "pythonModel": "MessageCommerceHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageCommerceMoney": {
+      "pythonModel": "MessageCommerceMoney",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageCommerceReceivedWebhookEvent": {
+      "pythonModel": "MessageCommerceReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageCommerceUpdatedWebhookEvent": {
+      "pythonModel": "MessageCommerceUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageCommerceWebhookEvent": {
+      "pythonModel": "MessageCommerceWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageContactCards": {
+      "pythonModel": "MessageContactCards",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageContactCardsHistoryWebhookEvent": {
+      "pythonModel": "MessageContactCardsHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageContactCardsReceivedWebhookEvent": {
+      "pythonModel": "MessageContactCardsReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageContactCardsUpdatedWebhookEvent": {
+      "pythonModel": "MessageContactCardsUpdatedWebhookEvent",
+      "kind": "allOf",
       "dependentRequired": {}
     },
     "MessageEditRequest": {
@@ -2860,8 +3768,143 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "MessageInteractive": {
+      "pythonModel": "MessageInteractive",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveAttachment": {
+      "pythonModel": "MessageInteractiveAttachment",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveAttachmentMetadata": {
+      "pythonModel": "MessageInteractiveAttachmentMetadata",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveButton": {
+      "pythonModel": "MessageInteractiveButton",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveHeader": {
+      "pythonModel": "MessageInteractiveHeader",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveHistoryWebhookEvent": {
+      "pythonModel": "MessageInteractiveHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveMessage": {
+      "pythonModel": "MessageInteractiveMessage",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveReceivedWebhookEvent": {
+      "pythonModel": "MessageInteractiveReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveResponse": {
+      "pythonModel": "MessageInteractiveResponse",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveUpdatedWebhookEvent": {
+      "pythonModel": "MessageInteractiveUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageInteractiveWebhookEvent": {
+      "pythonModel": "MessageInteractiveWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreview": {
+      "pythonModel": "MessageLinkPreview",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewHTTPURL": {
+      "pythonModel": "MessageLinkPreviewHTTPURL",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewHistoryWebhookEvent": {
+      "pythonModel": "MessageLinkPreviewHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewMessage": {
+      "pythonModel": "MessageLinkPreviewMessage",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewReceivedWebhookEvent": {
+      "pythonModel": "MessageLinkPreviewReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewTextUpdate": {
+      "pythonModel": "MessageLinkPreviewTextUpdate",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewUpdatedWebhookEvent": {
+      "pythonModel": "MessageLinkPreviewUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLinkPreviewWebhookEvent": {
+      "pythonModel": "MessageLinkPreviewWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLiveLocation": {
+      "pythonModel": "MessageLiveLocation",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageLiveLocationHistoryWebhookEvent": {
+      "pythonModel": "MessageLiveLocationHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLiveLocationReceivedWebhookEvent": {
+      "pythonModel": "MessageLiveLocationReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageLiveLocationUpdatedWebhookEvent": {
+      "pythonModel": "MessageLiveLocationUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageOrder": {
+      "pythonModel": "MessageOrder",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "MessagePayload": {
       "pythonModel": "MessagePayload",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessagePinChange": {
+      "pythonModel": "MessagePinChange",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePinMessage": {
+      "pythonModel": "MessagePinMessage",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePinParticipant": {
+      "pythonModel": "MessagePinParticipant",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2870,8 +3913,103 @@
       "kind": "allOf",
       "dependentRequired": {}
     },
+    "MessagePinState": {
+      "pythonModel": "MessagePinState",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessagePinUpdatedWebhookEvent": {
+      "pythonModel": "MessagePinUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessagePoll": {
+      "pythonModel": "MessagePoll",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePollHistoryWebhookEvent": {
+      "pythonModel": "MessagePollHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessagePollMessage": {
+      "pythonModel": "MessagePollMessage",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePollOption": {
+      "pythonModel": "MessagePollOption",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePollReceivedWebhookEvent": {
+      "pythonModel": "MessagePollReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessagePollVote": {
+      "pythonModel": "MessagePollVote",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessagePollVoteChange": {
+      "pythonModel": "MessagePollVoteChange",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePollVoteMessage": {
+      "pythonModel": "MessagePollVoteMessage",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePollVoteUpdatedWebhookEvent": {
+      "pythonModel": "MessagePollVoteUpdatedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessagePollWebhookEvent": {
+      "pythonModel": "MessagePollWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageProduct": {
+      "pythonModel": "MessageProduct",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "MessageReactionRequest": {
       "pythonModel": "MessageReactionRequest",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageReferral": {
+      "pythonModel": "MessageReferral",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageReferralHistoryWebhookEvent": {
+      "pythonModel": "MessageReferralHistoryWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageReferralProviderExtensions": {
+      "pythonModel": "MessageReferralProviderExtensions",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "MessageReferralReceivedWebhookEvent": {
+      "pythonModel": "MessageReferralReceivedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageReferralUpdatedWebhookEvent": {
+      "pythonModel": "MessageReferralUpdatedWebhookEvent",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageReferralWebhookEvent": {
+      "pythonModel": "MessageReferralWebhookEvent",
       "kind": "allOf",
       "dependentRequired": {}
     },
@@ -2885,9 +4023,119 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "MessageWithOptionalCommerce": {
+      "pythonModel": "MessageWithOptionalCommerce",
+      "kind": "unknown",
+      "dependentRequired": {}
+    },
+    "MessageWithOptionalContactCards": {
+      "pythonModel": "MessageWithOptionalContactCards",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageWithOptionalInteractive": {
+      "pythonModel": "MessageWithOptionalInteractive",
+      "kind": "unknown",
+      "dependentRequired": {}
+    },
+    "MessageWithOptionalLinkPreview": {
+      "pythonModel": "MessageWithOptionalLinkPreview",
+      "kind": "unknown",
+      "dependentRequired": {}
+    },
+    "MessageWithOptionalLiveLocation": {
+      "pythonModel": "MessageWithOptionalLiveLocation",
+      "kind": "allOf",
+      "dependentRequired": {}
+    },
+    "MessageWithOptionalPoll": {
+      "pythonModel": "MessageWithOptionalPoll",
+      "kind": "unknown",
+      "dependentRequired": {}
+    },
+    "MessageWithOptionalReferral": {
+      "pythonModel": "MessageWithOptionalReferral",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "OkData": {
       "pythonModel": "OkData",
       "kind": "object",
+      "dependentRequired": {}
+    },
+    "PasskeyResponseRequest": {
+      "pythonModel": "PasskeyResponseRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PollMessagePayload": {
+      "pythonModel": "PollMessagePayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "Post": {
+      "pythonModel": "Post",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostAuthor": {
+      "pythonModel": "PostAuthor",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostComment": {
+      "pythonModel": "PostComment",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostCommentCreatedWebhookEvent": {
+      "pythonModel": "PostCommentCreatedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostCommentListRequest": {
+      "pythonModel": "PostCommentListRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostCommentListResult": {
+      "pythonModel": "PostCommentListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostCommentReplyRequest": {
+      "pythonModel": "PostCommentReplyRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostCommentReplyResult": {
+      "pythonModel": "PostCommentReplyResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostInfoRequest": {
+      "pythonModel": "PostInfoRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostListResult": {
+      "pythonModel": "PostListResult",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "PostResourceID": {
+      "pythonModel": "PostResourceID",
+      "kind": "string",
+      "dependentRequired": {}
+    },
+    "ProviderAuthSession": {
+      "pythonModel": "ProviderAuthSession",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ProviderInputName": {
+      "pythonModel": "ProviderInputName",
+      "kind": "enum",
       "dependentRequired": {}
     },
     "ProviderName": {
@@ -2902,6 +4150,21 @@
     },
     "ProviderRegionsResponse": {
       "pythonModel": "ProviderRegionsResponse",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "QRAuthCheckData": {
+      "pythonModel": "QRAuthCheckData",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "QRAuthCheckPayload": {
+      "pythonModel": "QRAuthCheckPayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "ReceivedContactCard": {
+      "pythonModel": "ReceivedContactCard",
       "kind": "object",
       "dependentRequired": {}
     },
@@ -2935,9 +4198,29 @@
       "kind": "enum",
       "dependentRequired": {}
     },
+    "SendMessageLinkPreview": {
+      "pythonModel": "SendMessageLinkPreview",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "SendMessagePoll": {
+      "pythonModel": "SendMessagePoll",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "SendMessagePollOption": {
+      "pythonModel": "SendMessagePollOption",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "SendMessageProviderData": {
+      "pythonModel": "SendMessageProviderData",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "SendMessageRequest": {
       "pythonModel": "SendMessageRequest",
-      "kind": "object",
+      "kind": "allOf",
       "dependentRequired": {}
     },
     "SendMessageResult": {
@@ -2945,9 +4228,29 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "SessionImportRequest": {
+      "pythonModel": "SessionImportRequest",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "StandardEventType": {
       "pythonModel": "StandardEventType",
       "kind": "enum",
+      "dependentRequired": {}
+    },
+    "StartCodeAuthData": {
+      "pythonModel": "StartCodeAuthData",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "StickerMessagePayload": {
+      "pythonModel": "StickerMessagePayload",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "TextMessagePayload": {
+      "pythonModel": "TextMessagePayload",
+      "kind": "object",
       "dependentRequired": {}
     },
     "WebhookEndpoint": {
@@ -2960,9 +4263,49 @@
       "kind": "object",
       "dependentRequired": {}
     },
+    "WhatsAppAccountAuthFailedWebhookEvent": {
+      "pythonModel": "WhatsAppAccountAuthFailedWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WhatsAppContactCreateOptions": {
+      "pythonModel": "WhatsAppContactCreateOptions",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WhatsAppDeviceID": {
+      "pythonModel": "WhatsAppDeviceID",
+      "kind": "integer",
+      "dependentRequired": {}
+    },
+    "WhatsAppMessageDeviceSender": {
+      "pythonModel": "WhatsAppMessageDeviceSender",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WhatsAppMessageDeviceWebhookEvent": {
+      "pythonModel": "WhatsAppMessageDeviceWebhookEvent",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WhatsAppMessageReferralExtension": {
+      "pythonModel": "WhatsAppMessageReferralExtension",
+      "kind": "object",
+      "dependentRequired": {}
+    },
+    "WhatsAppProtocolSessionImportParams": {
+      "pythonModel": "WhatsAppProtocolSessionImportParams",
+      "kind": "object",
+      "dependentRequired": {}
+    },
     "Workspace": {
       "pythonModel": "Workspace",
       "kind": "object",
+      "dependentRequired": {}
+    },
+    "WorkspaceStatus": {
+      "pythonModel": "WorkspaceStatus",
+      "kind": "enum",
       "dependentRequired": {}
     },
     "WorkspaceUpdateRequest": {

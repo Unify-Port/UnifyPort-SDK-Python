@@ -2,6 +2,10 @@
 
 [English](release-notes.md) | [简体中文](zh-CN/release-notes.md)
 
+## Unreleased
+
+Synchronize 78 HTTP operations, 218 schemas, numeric error metadata and Webhook types. The package version is unchanged; see [Contract update](contract-update.md).
+
 ## 0.1.0
 
 Initial Python SDK implementation for the public UnifyPort Device API:

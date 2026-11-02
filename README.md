@@ -5,8 +5,8 @@
 [Website](https://www.unifyport.ai)
 
 Type-safe sync and async Python clients for the public UnifyPort Device API. The SDK is generated from
-the approved public OpenAPI contract and currently tracks `@unifyport/sdk-node` `v0.4.0`: 64 operations,
-70 component schemas, and the same retry and secret-handling classifications.
+the approved public OpenAPI contract and currently tracks `@unifyport/sdk-node` `v0.4.0`: 78 operations,
+218 component schemas, and the same retry and secret-handling classifications.
 
 The Python package is `unifyport-sdk`; the import package is `unifyport`. This repository starts at SDK
 version `0.1.0`. A Git tag or local build alone does not prove that a version reached PyPI.
@@ -107,7 +107,7 @@ file records semantics that cannot be inferred safely from HTTP methods. Do not 
 ```bash
 python scripts/generate.py
 python scripts/generate.py --check
-python scripts/check_node_parity.py --node-repo ../unifyport-sdk-node --node-ref v0.4.0
+python scripts/check_node_parity.py --node-repo ../UnifyPort-SDK-Nodejs --node-ref 5901244c409f63fd6b77a899c239ebc9ee96dd50
 ```
 
 See the [API coverage report](https://github.com/Unify-Port/UnifyPort-SDK-Python/blob/main/docs/api-coverage.md),
@@ -137,3 +137,5 @@ pip-audit
 The SDK source is available under the
 [MIT License](https://github.com/Unify-Port/UnifyPort-SDK-Python/blob/main/LICENSE). The Device API
 contract describes the service interface and retains its own license metadata.
+
+The synchronization baseline is approved Node source `5901244`, not a claim that npm has released these capabilities. No package is published by this update. See [Contract update](docs/contract-update.md).

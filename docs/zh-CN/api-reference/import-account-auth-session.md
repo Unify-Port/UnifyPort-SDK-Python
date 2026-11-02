@@ -37,7 +37,7 @@
 
 - 必填: `否`
 - Python model: `ImportAccountAuthSessionRequestBody`
-- Contract schema: `FreeFormObject`
+- Contract schema: `SessionImportRequest`
 
 ## 成功响应
 

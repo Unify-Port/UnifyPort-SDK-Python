@@ -37,7 +37,7 @@ Authentication headers are not operation inputs; `X-Api-Key` comes only from cli
 
 - Required: `no`
 - Python model: `ImportAccountAuthSessionRequestBody`
-- Contract schema: `FreeFormObject`
+- Contract schema: `SessionImportRequest`
 
 ## Success response
 

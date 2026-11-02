@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the pinned contract and operation policy against Node SDK v0.4.0."""
+"""Verify the pinned contract and operation policy against the approved Node SDK source."""
 
 from __future__ import annotations
 
@@ -83,12 +83,17 @@ def check_node_parity(node_repository: Path, node_ref: str) -> None:
     if not node_repository.is_dir():
         raise ValueError("Node SDK repository directory is missing")
 
-    expected_ref = source_node.get("tag")
+    expected_ref = (
+        source_node.get("ref")
+        if source_node.get("baselineKind") == "approved-source"
+        else source_node.get("tag")
+    )
+    # 批准源码与已发布 tag 分开固定，不能因工作分支变化而扩大基线。
     if node_ref != expected_ref:
-        raise ValueError(f"node ref must match pinned source tag {expected_ref}")
+        raise ValueError(f"node ref must match pinned source ref {expected_ref}")
     peeled_commit = _git_text(node_repository, "rev-parse", f"{node_ref}^{{commit}}")
     if peeled_commit != source_node.get("commit"):
-        raise ValueError("Node tag target differs from parity/source.json")
+        raise ValueError("Node ref target differs from parity/source.json")
 
     node_contract = _git_bytes(
         node_repository,
@@ -160,11 +165,11 @@ def main() -> int:
     parser.add_argument(
         "--node-repo",
         type=Path,
-        default=ROOT.parent / "unifyport-sdk-node",
+        default=ROOT.parent / "UnifyPort-SDK-Nodejs",
     )
     parser.add_argument(
         "--node-ref",
-        default=cast(str, source_node.get("tag")),
+        default=cast(str, source_node.get("ref") or source_node.get("tag")),
     )
     arguments = parser.parse_args()
     try:
@@ -176,8 +181,8 @@ def main() -> int:
     print(
         "[parity:check] "
         f"{manifest['operationCount']} operations, {manifest['schemaCount']} schemas, "
-        f"and contract {str(manifest['contractSha256'])[:12]} match Node SDK "
-        f"{source_node['version']}",
+        f"and contract {str(manifest['contractSha256'])[:12]} match Node source "
+        f"{str(source_node['commit'])[:7]} ({source_node.get('baselineKind', 'release-tag')})",
         file=sys.stderr,
     )
     return 0

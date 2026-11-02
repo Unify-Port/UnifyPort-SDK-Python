@@ -29,6 +29,7 @@
 
 | Wire 名称 | Python | 必填 | 类型 |
 | --- | --- | --- | --- |
+| `Idempotency-Key` | `idempotency_key` | 否 | `str` |
 | `X-Request-Id` | `x_request_id` | 否 | `str` |
 
 认证 header 不属于 operation 输入；`X-Api-Key` 只能来自 client config。
@@ -37,7 +38,7 @@
 
 - 必填: `是`
 - Python model: `CreateAccountRequestBody`
-- Contract schema: `AccountRequest`
+- Contract schema: `AccountCreateRequest`
 
 ## 成功响应
 

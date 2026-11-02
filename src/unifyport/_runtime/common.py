@@ -451,9 +451,14 @@ def response_outcome(
         )
 
     code = f"HTTP_{status}"
+    numeric_code = None
     if isinstance(parsed, Mapping):
         nested = parsed.get("error")
         candidate = nested if isinstance(nested, Mapping) else parsed
+        # 严格 ASCII 五位字符串，错误元数据不应成为敏感输出通道。
+        numeric = candidate.get("numeric_code")
+        if isinstance(numeric, str) and re.fullmatch(r"[1-9][0-9]{4}", numeric):
+            numeric_code = numeric
         safe_code = safe_diagnostic(candidate.get("code"), maximum=64)
         if safe_code is not None:
             code = safe_code
@@ -461,6 +466,7 @@ def response_outcome(
     return UnifyPortApiError(
         status=status,
         code=code,
+        numeric_code=numeric_code,
         operation_id=operation_id,
         request_id=request_id,
     )

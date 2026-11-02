@@ -2,6 +2,10 @@
 
 [English](../release-notes.md) | [简体中文](release-notes.md)
 
+## 未发布
+
+同步 78 个 HTTP 接口、218 个 schema、数字错误码及 Webhook 类型。版本未变更；详见[本次契约更新](contract-update.md)。
+
 ## 0.1.0
 
 公开 UnifyPort Device API 的首个 Python SDK 实现：

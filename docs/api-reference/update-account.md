@@ -37,7 +37,7 @@ Authentication headers are not operation inputs; `X-Api-Key` comes only from cli
 
 - Required: `yes`
 - Python model: `UpdateAccountRequestBody`
-- Contract schema: `AccountRequest`
+- Contract schema: `AccountUpdateRequest`
 
 ## Success response
 
