@@ -38,7 +38,8 @@ from .pagination import (
 )
 from .result import ApiResult
 
-__version__ = "0.1.0"
+# 分页响应与公开类型包含不兼容变化，使用新的 minor 版本承载迁移。
+__version__ = "0.2.0"
 
 # 根入口只显式列出稳定公共面；生成 model 通过 unifyport.models 模块访问。
 __all__ = [

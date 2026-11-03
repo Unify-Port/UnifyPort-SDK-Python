@@ -15,7 +15,8 @@ from unifyport import (
     models,
 )
 
-EXPECTED_VERSION = "0.1.0"
+# 独立固定预期版本，避免旧 wheel 与旧 runtime 同时通过自洽检查。
+EXPECTED_VERSION = "0.2.0"
 
 
 def _response(request: httpx.Request) -> httpx.Response:
