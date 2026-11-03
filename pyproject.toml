@@ -37,7 +37,8 @@ dev = [
   "pytest-cov>=6,<8",
   # 生成链解析冻结的 YAML contract；运行时不依赖它。
   "PyYAML>=6,<7",
-  "ruff>=0.9,<1",
+  # 生成链共用 formatter，固定版本避免 CI 与本地生成结果漂移。
+  "ruff==0.17.3",
   "twine>=6,<8",
 ]
 

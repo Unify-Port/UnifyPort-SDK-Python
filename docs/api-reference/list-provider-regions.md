@@ -17,7 +17,7 @@ Explicit Python method for public Device API operation `listProviderRegions`.
 
 | Wire name | Python | Required | Type |
 | --- | --- | --- | --- |
-| `provider` | `provider` | yes | `ProviderName` |
+| `provider` | `provider` | yes | `ProviderInputName` |
 
 ### Query parameters
 

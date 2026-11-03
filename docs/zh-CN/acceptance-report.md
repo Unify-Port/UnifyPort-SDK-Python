@@ -5,6 +5,8 @@
 本报告记录 `0.1.0` release candidate 在 2026-07-31 的本地验收证据，并区分 source/contract 验证、
 registry 发布和真实 provider E2E。
 
+以下保留初始基线的历史验收记录。当前未发布的同步与兼容说明见[本次契约更新](contract-update.md)，不能把历史覆盖数或门禁视为本次发布证据。
+
 ## 冻结基线
 
 | 项目 | 验收值 |

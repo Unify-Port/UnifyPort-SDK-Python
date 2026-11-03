@@ -4,14 +4,14 @@
 
 | Surface | Count | Status |
 | --- | ---: | --- |
-| OpenAPI paths | 55 | Frozen from Node `v0.4.0` |
-| OpenAPI operations | 64 | 64 sync + 64 async generated methods |
-| Component schemas | 70 | Generated Python model/type names |
-| Tags | 11 | Preserved in operation metadata |
+| OpenAPI paths | 69 | Approved source snapshot |
+| OpenAPI operations | 78 | 78 sync + 78 async generated methods |
+| Component schemas | 225 | Generated Python model/type names |
+| Tags | 13 | Preserved in operation metadata |
 | Retryable operations | 19 | Exact allowlist |
-| Destructive operations | 7 | Exact reviewed classification |
-| Secret-input operations | 8 | Never granted implicit retry/MCP access |
-| Secret-output operations | 12 | Redaction boundary documented |
+| Destructive operations | 8 | Exact reviewed classification |
+| Secret-input operations | 9 | Never granted implicit retry/MCP access |
+| Secret-output operations | 16 | Redaction boundary documented |
 | Node MCP-eligible operations | 4 | Recorded only for parity |
 | Python MCP-exposed operations | 0 | MCP is outside package scope |
 

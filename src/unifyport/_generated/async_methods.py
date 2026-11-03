@@ -16,6 +16,9 @@ from . import models as _models
 # recursive JsonValue 会按 method module namespace 求值，因此保留运行时名称。
 from .models import JsonValue  # noqa: F401
 
+# 联合别名里的 ForwardRef 按方法 namespace 解析，补齐生成模型名称以支持 introspection。
+globals().update({name: getattr(_models, name) for name in _models.__all__})
+
 
 class AsyncDeviceMethodsMixin:
     if TYPE_CHECKING:
@@ -106,16 +109,42 @@ class AsyncDeviceMethodsMixin:
             options=options,
         )
 
+    async def confirm_account_passkey(
+        self,
+        *,
+        account_id: str,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.ConfirmAccountPasskeyResponse]:
+        """确认 Passkey 授权"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "confirmAccountPasskey",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=None,
+            headers=header_params,
+            options=options,
+        )
+
     async def create_account(
         self,
         *,
         body: _models.CreateAccountRequestBody,
+        idempotency_key: str | None = None,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.CreateAccountResponse]:
         """创建账号"""
         query_params = None
         request_headers = {
+            "Idempotency-Key": idempotency_key,
             "X-Request-Id": x_request_id,
         }
         header_params = {
@@ -126,6 +155,30 @@ class AsyncDeviceMethodsMixin:
             path_params=None,
             query=query_params,
             body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def create_account_auth_session(
+        self,
+        *,
+        account_id: str,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.CreateAccountAuthSessionResponse]:
+        """创建 Provider 授权会话"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "createAccountAuthSession",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=None,
             headers=header_params,
             options=options,
         )
@@ -148,6 +201,55 @@ class AsyncDeviceMethodsMixin:
         return await self._execute_operation(
             "createApiKey",
             path_params=None,
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def create_call(
+        self,
+        *,
+        body: _models.CreateCallRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.CreateCallResponse]:
+        """准备主动通话"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "createCall",
+            path_params=None,
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def create_contact(
+        self,
+        *,
+        account_id: str,
+        body: _models.CreateContactRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.CreateContactResponse]:
+        """添加联系人"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "createContact",
+            path_params={"account_id": account_id},
             query=query_params,
             body=body,
             headers=header_params,
@@ -207,11 +309,15 @@ class AsyncDeviceMethodsMixin:
         self,
         *,
         endpoint_id: str,
+        account_id: str | None = None,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.DeactivateWebhookEndpointResponse]:
         """停用 webhook endpoint"""
-        query_params = None
+        query = {
+            "account_id": account_id,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
         request_headers = {
             "X-Request-Id": x_request_id,
         }
@@ -280,11 +386,15 @@ class AsyncDeviceMethodsMixin:
         self,
         *,
         endpoint_id: str,
+        account_id: str | None = None,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.DeleteWebhookEndpointResponse]:
         """删除 webhook endpoint"""
-        query_params = None
+        query = {
+            "account_id": account_id,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
         request_headers = {
             "X-Request-Id": x_request_id,
         }
@@ -372,6 +482,57 @@ class AsyncDeviceMethodsMixin:
             options=options,
         )
 
+    async def get_account_operation(
+        self,
+        *,
+        operation_id: str,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.GetAccountOperationResponse]:
+        """查询账号计费操作"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "getAccountOperation",
+            path_params={"operation_id": operation_id},
+            query=query_params,
+            body=None,
+            headers=header_params,
+            options=options,
+        )
+
+    async def get_active_call(
+        self,
+        *,
+        account_id: str,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.GetActiveCallResponse]:
+        """查询账号当前活动通话"""
+        query = {
+            "account_id": account_id,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "getActiveCall",
+            path_params=None,
+            query=query_params,
+            body=None,
+            headers=header_params,
+            options=options,
+        )
+
     async def get_contact(
         self,
         *,
@@ -393,6 +554,34 @@ class AsyncDeviceMethodsMixin:
         } or None
         return await self._execute_operation(
             "getContact",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=None,
+            headers=header_params,
+            options=options,
+        )
+
+    async def get_contact_membership(
+        self,
+        *,
+        account_id: str,
+        contact_id: str,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.GetContactMembershipResponse]:
+        """查询联系人是否在联系人列表中"""
+        query = {
+            "contact_id": contact_id,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "getContactMembership",
             path_params={"account_id": account_id},
             query=query_params,
             body=None,
@@ -486,15 +675,44 @@ class AsyncDeviceMethodsMixin:
             options=options,
         )
 
+    async def get_post(
+        self,
+        *,
+        account_id: str,
+        body: _models.GetPostRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.GetPostResponse]:
+        """获取帖子详情"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "getPost",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
     async def get_webhook_endpoint(
         self,
         *,
         endpoint_id: str,
+        account_id: str | None = None,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.GetWebhookEndpointResponse]:
         """获取 webhook endpoint"""
-        query_params = None
+        query = {
+            "account_id": account_id,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
         request_headers = {
             "X-Request-Id": x_request_id,
         }
@@ -529,6 +747,31 @@ class AsyncDeviceMethodsMixin:
             path_params=None,
             query=query_params,
             body=None,
+            headers=header_params,
+            options=options,
+        )
+
+    async def hangup_call(
+        self,
+        *,
+        call_id: str,
+        body: _models.HangupCallRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.HangupCallResponse]:
+        """挂断指定通话"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "hangupCall",
+            path_params={"call_id": call_id},
+            query=query_params,
+            body=body,
             headers=header_params,
             options=options,
         )
@@ -586,11 +829,17 @@ class AsyncDeviceMethodsMixin:
     async def list_accounts(
         self,
         *,
+        limit: int | None = None,
+        cursor: str | None = None,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.ListAccountsResponse]:
         """列出账号"""
-        query_params = None
+        query = {
+            "limit": limit,
+            "cursor": cursor,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
         request_headers = {
             "X-Request-Id": x_request_id,
         }
@@ -843,10 +1092,65 @@ class AsyncDeviceMethodsMixin:
             options=options,
         )
 
+    async def list_post_comments(
+        self,
+        *,
+        account_id: str,
+        body: _models.ListPostCommentsRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.ListPostCommentsResponse]:
+        """列出帖子的一级评论"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "listPostComments",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def list_posts(
+        self,
+        *,
+        account_id: str,
+        cursor: str | None = None,
+        limit: int | None = None,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.ListPostsResponse]:
+        """列出本账号帖子"""
+        query = {
+            "cursor": cursor,
+            "limit": limit,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "listPosts",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=None,
+            headers=header_params,
+            options=options,
+        )
+
     async def list_provider_regions(
         self,
         *,
-        provider: _models.ProviderName,
+        provider: _models.ProviderInputName,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.ListProviderRegionsResponse]:
@@ -870,11 +1174,15 @@ class AsyncDeviceMethodsMixin:
     async def list_webhook_endpoints(
         self,
         *,
+        account_id: str | None = None,
         x_request_id: str | None = None,
         options: RequestOptions | Mapping[str, Any] | None = None,
     ) -> ApiResult[_models.ListWebhookEndpointsResponse]:
         """列出 webhook endpoint"""
-        query_params = None
+        query = {
+            "account_id": account_id,
+        }
+        query_params = {name: value for name, value in query.items() if value is not None} or None
         request_headers = {
             "X-Request-Id": x_request_id,
         }
@@ -1081,6 +1389,56 @@ class AsyncDeviceMethodsMixin:
         } or None
         return await self._execute_operation(
             "refreshAccountRuntime",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def reply_post_comment(
+        self,
+        *,
+        account_id: str,
+        body: _models.ReplyPostCommentRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.ReplyPostCommentResponse]:
+        """发布一级评论或回复一级评论"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "replyPostComment",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def request_conversation_history(
+        self,
+        *,
+        account_id: str,
+        body: _models.RequestConversationHistoryRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.RequestConversationHistoryResponse]:
+        """请求补拉会话历史消息"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "requestConversationHistory",
             path_params={"account_id": account_id},
             query=query_params,
             body=body,
@@ -1379,6 +1737,31 @@ class AsyncDeviceMethodsMixin:
         } or None
         return await self._execute_operation(
             "submitAccountAuthPassword",
+            path_params={"account_id": account_id},
+            query=query_params,
+            body=body,
+            headers=header_params,
+            options=options,
+        )
+
+    async def submit_account_passkey_response(
+        self,
+        *,
+        account_id: str,
+        body: _models.SubmitAccountPasskeyResponseRequestBody,
+        x_request_id: str | None = None,
+        options: RequestOptions | Mapping[str, Any] | None = None,
+    ) -> ApiResult[_models.SubmitAccountPasskeyResponseResponse]:
+        """提交 Passkey 凭证响应"""
+        query_params = None
+        request_headers = {
+            "X-Request-Id": x_request_id,
+        }
+        header_params = {
+            name: value for name, value in request_headers.items() if value is not None
+        } or None
+        return await self._execute_operation(
+            "submitAccountPasskeyResponse",
             path_params={"account_id": account_id},
             query=query_params,
             body=body,

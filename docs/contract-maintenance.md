@@ -4,9 +4,8 @@
 
 ## Baseline
 
-The initial Python contract is byte-for-byte identical to the public contract shipped by
-`@unifyport/sdk-node` `v0.4.0`, with SHA-256
-`30e3bd1a0c0fd1f0df244a89786a2b19e2acd4cad377f3742805acd5d1b946ba`.
+The current contract is byte-for-byte aligned with approved public Node source `ce60499`, SHA-256
+`8190a34dc8ed60476f79e00b37d9dea418082886724ee6d64efa389f440adffc`. `parity/source.json` records an approved-source baseline; it does not claim an npm release of these capabilities.
 
 Do not replace it directly with an internal service OpenAPI file. The public contract intentionally
 removes internal-only provider values and descriptions.
@@ -26,7 +25,7 @@ Required checks:
 
 ```bash
 python scripts/generate.py --check
-python scripts/check_node_parity.py --node-repo ../unifyport-sdk-node --node-ref <tag>
+python scripts/check_node_parity.py --node-repo ../UnifyPort-SDK-Nodejs --node-ref <tag>
 ruff format --check .
 ruff check .
 mypy --strict src scripts typing_tests

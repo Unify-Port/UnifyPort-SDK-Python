@@ -29,6 +29,7 @@ Explicit Python method for public Device API operation `createAccount`.
 
 | Wire name | Python | Required | Type |
 | --- | --- | --- | --- |
+| `Idempotency-Key` | `idempotency_key` | no | `str` |
 | `X-Request-Id` | `x_request_id` | no | `str` |
 
 Authentication headers are not operation inputs; `X-Api-Key` comes only from client configuration.
@@ -37,7 +38,7 @@ Authentication headers are not operation inputs; `X-Api-Key` comes only from cli
 
 - Required: `yes`
 - Python model: `CreateAccountRequestBody`
-- Contract schema: `AccountRequest`
+- Contract schema: `AccountCreateRequest`
 
 ## Success response
 

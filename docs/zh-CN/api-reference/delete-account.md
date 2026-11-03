@@ -42,7 +42,7 @@
 ## 成功响应
 
 - Python model: `DeleteAccountResponse`
-- Contract schema: `None`
+- Contract schema: `ResponseEnvelope[AccountOperation] | None`
 
 ## Policy
 

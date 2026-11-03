@@ -23,7 +23,8 @@ Explicit Python method for public Device API operation `listAccounts`.
 
 | Wire name | Python | Required | Type |
 | --- | --- | --- | --- |
-| None | - | - | - |
+| `limit` | `limit` | no | `int` |
+| `cursor` | `cursor` | no | `str` |
 
 ### Header parameters
 
@@ -42,7 +43,7 @@ Authentication headers are not operation inputs; `X-Api-Key` comes only from cli
 ## Success response
 
 - Python model: `ListAccountsResponse`
-- Contract schema: `ResponseEnvelope[list[Account]]`
+- Contract schema: `ResponseEnvelope[AccountListResult]`
 
 ## Policy
 

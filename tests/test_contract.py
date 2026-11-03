@@ -11,7 +11,7 @@ from unifyport._generated import OPERATIONS, models
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_PATH = ROOT / "contracts/device.openapi.yaml"
-EXPECTED_CONTRACT_SHA256 = "30e3bd1a0c0fd1f0df244a89786a2b19e2acd4cad377f3742805acd5d1b946ba"
+EXPECTED_CONTRACT_SHA256 = "8190a34dc8ed60476f79e00b37d9dea418082886724ee6d64efa389f440adffc"
 EXPECTED_RETRYABLE = {
     "getAccount",
     "getAccountAuthState",
@@ -36,6 +36,7 @@ EXPECTED_RETRYABLE = {
 EXPECTED_DESTRUCTIVE = {
     "deleteAccount",
     "deleteConversationLabel",
+    "hangupCall",
     "deleteWebhookEndpoint",
     "leaveGroup",
     "revokeMessage",
@@ -49,10 +50,15 @@ EXPECTED_SECRET_INPUT = {
     "sendMessage",
     "submitAccountAuthCode",
     "submitAccountAuthPassword",
+    "submitAccountPasskeyResponse",
     "updateAccount",
     "updateWebhookEndpoint",
 }
 EXPECTED_SECRET_OUTPUT = {
+    "confirmAccountPasskey",
+    "createAccountAuthSession",
+    "createCall",
+    "submitAccountPasskeyResponse",
     "checkAccountQrAuth",
     "createAccount",
     "createApiKey",
@@ -80,24 +86,27 @@ def contract() -> dict[str, Any]:
     return cast(dict[str, Any], parsed)
 
 
-def test_contract_is_exact_published_node_v040_input() -> None:
+def test_contract_is_exact_approved_node_source() -> None:
     source = json.loads((ROOT / "parity/source.json").read_text(encoding="utf-8"))
     digest = hashlib.sha256(CONTRACT_PATH.read_bytes()).hexdigest()
     assert digest == EXPECTED_CONTRACT_SHA256
     assert source["nodeSdk"]["version"] == "0.4.0"
-    assert source["nodeSdk"]["tag"] == "v0.4.0"
+    assert source["nodeSdk"]["baselineKind"] == "approved-source"
+    assert source["nodeSdk"]["ref"] == "ce60499d7169c860ed3f64a686e04bff44316f35"
     assert source["contract"] == {
         "path": "contracts/device.openapi.yaml",
         "sha256": EXPECTED_CONTRACT_SHA256,
-        "operationCount": 64,
-        "schemaCount": 70,
+        "operationCount": 78,
+        "schemaCount": 225,
     }
 
 
 def test_operation_policy_sets_are_exact() -> None:
     policy = json.loads((ROOT / "policy/operation-policies.json").read_text(encoding="utf-8"))
     assert set(policy["retryAllowlist"]) == EXPECTED_RETRYABLE
-    assert set(policy["mutabilityOverrides"]) == EXPECTED_DESTRUCTIVE
+    assert {
+        key for key, value in policy["mutabilityOverrides"].items() if value == "destructive"
+    } == EXPECTED_DESTRUCTIVE
     assert set(policy["secretInput"]) == EXPECTED_SECRET_INPUT
     assert set(policy["secretOutput"]) == EXPECTED_SECRET_OUTPUT
     assert policy["nodeMcpExposure"] == EXPECTED_NODE_MCP
@@ -132,17 +141,23 @@ def test_provider_profile_and_provider_names_remain_public_contract_types() -> N
         "last_name",
         "avatar_url",
         "bio",
+        "business_name",
+        "push_name",
+        "platform",
+        "device_id",
     }
     assert models.ProviderProfile.__optional_keys__ == set(provider_profile["properties"])
     assert models.ProviderProfile.__extra_items__ == models.JsonValue
+    # 新增 FB 后仍精确保留旧渠道，防止生成时丢失或放宽枚举。
     assert schemas["ProviderName"]["enum"] == [
         "telegram",
         "whatsapp",
         "line",
         "twitter",
-        "x",
+        "facebook",
         "zalo",
         "tiktok",
+        "whatsapp-protocol",
     ]
 
 
@@ -158,14 +173,8 @@ def test_reply_token_input_and_optional_output_are_preserved() -> None:
     assert "reply_token" in models.SendMessageResult.__optional_keys__
 
 
-def test_conversation_read_dependent_required_is_preserved() -> None:
-    conversation_read = contract()["components"]["schemas"]["ConversationReadRequest"]
-    extension = conversation_read["allOf"][1]
-    expected = {
-        "up_to_message_id": ["up_to_message_sender_id"],
-        "up_to_message_sender_id": ["up_to_message_id"],
-    }
-    assert extension["dependentRequired"] == expected
-    assert dict(models.DEPENDENT_REQUIRED["ConversationReadRequest"]) == {
-        key: tuple(value) for key, value in expected.items()
-    }
+def test_conversation_read_does_not_impose_whatsapp_pair_on_telegram() -> None:
+    # provider 相关约束由服务端判断，Telegram 消息边界不能被通用 sender guard 拒绝。
+    extension = contract()["components"]["schemas"]["ConversationReadRequest"]["allOf"][1]
+    assert "dependentRequired" not in extension
+    assert "ConversationReadRequest" not in models.DEPENDENT_REQUIRED

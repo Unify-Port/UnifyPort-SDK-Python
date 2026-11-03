@@ -70,10 +70,10 @@ def test_generated_artifacts_are_deterministic() -> None:
 
 
 def test_generated_operation_and_schema_coverage_is_complete() -> None:
-    assert len(NODE_OPERATION_IDS) == 64
-    assert len(OPERATIONS) == 64
-    assert len(PYTHON_METHODS) == 64
-    assert len(SCHEMA_NAMES) == 70
+    assert len(NODE_OPERATION_IDS) == 78
+    assert len(OPERATIONS) == 78
+    assert len(PYTHON_METHODS) == 78
+    assert len(SCHEMA_NAMES) == 225
     assert tuple(OPERATIONS) == NODE_OPERATION_IDS
     assert set(PYTHON_METHODS.values()) == set(NODE_OPERATION_IDS)
 
@@ -108,13 +108,13 @@ def test_every_public_operation_annotation_is_runtime_resolvable() -> None:
 
 def test_generated_manifest_preserves_node_and_python_method_mapping() -> None:
     manifest = json.loads((ROOT / "parity/manifest.gen.json").read_text(encoding="utf-8"))
-    assert manifest["operationCount"] == 64
-    assert manifest["schemaCount"] == 70
+    assert manifest["operationCount"] == 78
+    assert manifest["schemaCount"] == 225
     assert manifest["policyCounts"] == {
         "retryable": 19,
-        "destructive": 7,
-        "secretInput": 8,
-        "secretOutput": 12,
+        "destructive": 8,
+        "secretInput": 9,
+        "secretOutput": 16,
         "mcpEligible": 4,
         "pythonMcpExposed": 0,
     }
@@ -125,7 +125,7 @@ def test_generated_manifest_preserves_node_and_python_method_mapping() -> None:
         assert operation["pythonMethod"] == spec.python_method
         assert operation["responseSchema"] == spec.response_schema
         assert operation["pythonMcpExposure"] == "never"
-        assert operation["headerParameters"] == [
+        expected_headers = [
             {
                 "name": "X-Request-Id",
                 "pythonName": "x_request_id",
@@ -133,13 +133,24 @@ def test_generated_manifest_preserves_node_and_python_method_mapping() -> None:
                 "schema": "str",
             }
         ]
+        if operation_id in {"createAccount"}:
+            expected_headers.insert(
+                0,
+                {
+                    "name": "Idempotency-Key",
+                    "pythonName": "idempotency_key",
+                    "required": False,
+                    "schema": "str",
+                },
+            )
+        assert operation["headerParameters"] == expected_headers
 
 
 def test_generated_policy_counts_match_node_release() -> None:
     assert sum(operation.retryable for operation in OPERATIONS.values()) == 19
-    assert sum(operation.destructive for operation in OPERATIONS.values()) == 7
-    assert sum(operation.secret_input for operation in OPERATIONS.values()) == 8
-    assert sum(operation.secret_output for operation in OPERATIONS.values()) == 12
+    assert sum(operation.destructive for operation in OPERATIONS.values()) == 8
+    assert sum(operation.secret_input for operation in OPERATIONS.values()) == 9
+    assert sum(operation.secret_output for operation in OPERATIONS.values()) == 16
     assert sum(operation.mcp_eligible for operation in OPERATIONS.values()) == 4
     assert not any(operation.python_mcp_exposed for operation in OPERATIONS.values())
 
@@ -153,7 +164,7 @@ def test_generated_bilingual_reference_has_one_page_per_operation() -> None:
         for path in (ROOT / "docs/zh-CN/api-reference").glob("*.md")
         if path.name != "README.md"
     }
-    assert len(english) == 64
+    assert len(english) == 78
     assert chinese == english
 
 

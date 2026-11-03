@@ -42,7 +42,7 @@
 ## 成功响应
 
 - Python model: `CheckAccountQrAuthResponse`
-- Contract schema: `ResponseEnvelope[FreeFormObject]`
+- Contract schema: `ResponseEnvelope[QRAuthCheckData]`
 
 ## Policy
 

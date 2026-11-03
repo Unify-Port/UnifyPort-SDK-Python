@@ -23,7 +23,7 @@ Explicit Python method for public Device API operation `getWebhookEndpoint`.
 
 | Wire name | Python | Required | Type |
 | --- | --- | --- | --- |
-| None | - | - | - |
+| `account_id` | `account_id` | no | `str` |
 
 ### Header parameters
 

@@ -4,14 +4,14 @@
 
 | Surface | 数量 | 状态 |
 | --- | ---: | --- |
-| OpenAPI paths | 55 | 冻结自 Node `v0.4.0` |
-| OpenAPI operations | 64 | 64 个同步 + 64 个异步 generated method |
-| Component schemas | 70 | 生成 Python model/type name |
-| Tags | 11 | 保留在 operation metadata 中 |
+| OpenAPI paths | 69 | 已批准的公开源码快照 |
+| OpenAPI operations | 78 | 78 个同步 + 78 个异步 generated method |
+| Component schemas | 225 | 生成 Python model/type name |
+| Tags | 13 | 保留在 operation metadata 中 |
 | Retryable operations | 19 | 精确 allowlist |
-| Destructive operations | 7 | 精确评审分类 |
-| Secret-input operations | 8 | 不会隐式获得 retry/MCP 权限 |
-| Secret-output operations | 12 | 已记录 redaction 边界 |
+| Destructive operations | 8 | 精确评审分类 |
+| Secret-input operations | 9 | 不会隐式获得 retry/MCP 权限 |
+| Secret-output operations | 16 | 已记录 redaction 边界 |
 | Node MCP-eligible operations | 4 | 只用于 parity 记录 |
 | Python MCP-exposed operations | 0 | MCP 不在 package scope 内 |
 

@@ -2,6 +2,14 @@
 
 [English](../release-notes.md) | [简体中文](release-notes.md)
 
+## 未发布 - Facebook
+
+新增 facebook 渠道、四个标准回调接收类型，覆盖稀疏媒体和 session 授权。HTTP 方法、事件名及重试策略保持不变；穷举渠道的代码需处理新增值。详见 Facebook 渠道说明；不表示已发布或部署。
+
+## 未发布
+
+同步 78 个 HTTP 接口、218 个 schema、数字错误码及 Webhook 类型。版本未变更；详见[本次契约更新](contract-update.md)。
+
 ## 0.1.0
 
 公开 UnifyPort Device API 的首个 Python SDK 实现：

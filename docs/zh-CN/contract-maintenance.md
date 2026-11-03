@@ -4,8 +4,8 @@
 
 ## Baseline
 
-初始 Python contract 与 `@unifyport/sdk-node` `v0.4.0` 发布的公开 contract 逐 byte 相同，SHA-256 为
-`30e3bd1a0c0fd1f0df244a89786a2b19e2acd4cad377f3742805acd5d1b946ba`。
+当前 contract 逐 byte 对齐已批准的公开 Node 源码 `ce60499`，SHA-256 为
+`8190a34dc8ed60476f79e00b37d9dea418082886724ee6d64efa389f440adffc`。`parity/source.json` 使用 approved-source 标记；此记录不声明 npm 已发布同等能力。
 
 不要直接用内部 service OpenAPI 文件替换它；公开 contract 会有意移除 internal-only provider value 和
 description。
@@ -25,7 +25,7 @@ description。
 
 ```bash
 python scripts/generate.py --check
-python scripts/check_node_parity.py --node-repo ../unifyport-sdk-node --node-ref <tag>
+python scripts/check_node_parity.py --node-repo ../UnifyPort-SDK-Nodejs --node-ref <tag>
 ruff format --check .
 ruff check .
 mypy --strict src scripts typing_tests

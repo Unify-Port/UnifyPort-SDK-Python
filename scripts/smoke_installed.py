@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import get_type_hints
+from typing import get_args, get_type_hints
 
 import httpx
 
@@ -55,6 +55,12 @@ async def _async_smoke() -> None:
 def main() -> None:
     # public import/version/model metadata 可防止 wheel 漏文件或安装到旧 editable checkout。
     assert __version__ == EXPECTED_VERSION
+    # 安装产物必须包含 FB 类型，防止只在 editable checkout 中验证通过。
+    assert "facebook" in get_args(models.ProviderName)
+    assert models.FacebookMessage.__required_keys__ == frozenset({"id", "direction"})
+    assert "facebook" in get_args(
+        get_type_hints(models.FacebookMessageReceivedWebhookEvent)["provider"]
+    )
     assert models.ReplyTo.__required_keys__ == frozenset({"reply_token"})
     # 逐方法解析能发现 postponed annotation 在 wheel 中缺 runtime import 的问题。
     for spec in OPERATIONS.values():

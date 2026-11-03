@@ -42,7 +42,7 @@ Authentication headers are not operation inputs; `X-Api-Key` comes only from cli
 ## Success response
 
 - Python model: `DeleteAccountResponse`
-- Contract schema: `None`
+- Contract schema: `ResponseEnvelope[AccountOperation] | None`
 
 ## Policy
 

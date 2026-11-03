@@ -4,14 +4,14 @@
     "package": "@unifyport/sdk-node",
     "version": "0.4.0",
     "repository": "https://github.com/Unify-Port/UnifyPort-SDK-Nodejs.git",
-    "tag": "v0.4.0",
-    "commit": "03d9b371b9fecfb8dae0d9e1182de69874267286",
-    "acceptanceCommit": "9a1b6ea61ae4fe023c0aeb5a6f80a79c79e0e230"
+    "commit": "ce60499d7169c860ed3f64a686e04bff44316f35",
+    "baselineKind": "approved-source",
+    "ref": "ce60499d7169c860ed3f64a686e04bff44316f35"
   },
   "contract": {
     "path": "contracts/device.openapi.yaml",
-    "sha256": "30e3bd1a0c0fd1f0df244a89786a2b19e2acd4cad377f3742805acd5d1b946ba",
-    "operationCount": 64,
-    "schemaCount": 70
+    "sha256": "8190a34dc8ed60476f79e00b37d9dea418082886724ee6d64efa389f440adffc",
+    "operationCount": 78,
+    "schemaCount": 225
   }
 }

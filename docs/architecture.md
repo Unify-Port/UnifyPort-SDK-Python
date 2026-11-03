@@ -22,7 +22,7 @@ flowchart LR
 ## Source boundaries
 
 - `contracts/device.openapi.yaml` is the only protocol input. It is frozen from the public Node SDK
-  `v0.4.0` contract, not from an internal service repository.
+  approved-source contract recorded in `parity/source.json`, not from an internal service repository.
 - `policy/operation-policies.json` records retry, mutability, secret, header, and Node MCP parity facts
   that cannot be inferred safely from OpenAPI alone.
 - `parity/source.json` pins the upstream tag, commit, contract digest, and expected surface counts.
@@ -31,7 +31,7 @@ flowchart LR
 
 ## Public runtime
 
-`UnifyPortDeviceClient` and `AsyncUnifyPortDeviceClient` expose the same 64 snake_case methods. Generated
+`UnifyPortDeviceClient` and `AsyncUnifyPortDeviceClient` expose the same 78 snake_case methods. Generated
 methods translate Python input locations into one internal execution call; the clients do not build
 protocol paths by hand. The runtime then validates URL confinement and inputs, resolves the API key,
 applies the operation policy, sends the request, bounds the response, parses JSON, and returns filtered

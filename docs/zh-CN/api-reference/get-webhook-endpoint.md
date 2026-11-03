@@ -23,7 +23,7 @@
 
 | Wire 名称 | Python | 必填 | 类型 |
 | --- | --- | --- | --- |
-| 无 | - | - | - |
+| `account_id` | `account_id` | 否 | `str` |
 
 ### Header 参数
 

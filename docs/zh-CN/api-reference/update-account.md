@@ -37,7 +37,7 @@
 
 - 必填: `是`
 - Python model: `UpdateAccountRequestBody`
-- Contract schema: `AccountRequest`
+- Contract schema: `AccountUpdateRequest`
 
 ## 成功响应
 

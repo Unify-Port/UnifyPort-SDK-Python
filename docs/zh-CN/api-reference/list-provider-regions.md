@@ -17,7 +17,7 @@
 
 | Wire 名称 | Python | 必填 | 类型 |
 | --- | --- | --- | --- |
-| `provider` | `provider` | 是 | `ProviderName` |
+| `provider` | `provider` | 是 | `ProviderInputName` |
 
 ### Query 参数
 

@@ -42,7 +42,7 @@
 ## 成功响应
 
 - Python model: `StartAccountAuthResponse`
-- Contract schema: `ResponseEnvelope[FreeFormObject]`
+- Contract schema: `ResponseEnvelope[StartCodeAuthData]`
 
 ## Policy
 

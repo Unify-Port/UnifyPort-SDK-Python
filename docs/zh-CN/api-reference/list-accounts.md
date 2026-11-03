@@ -23,7 +23,8 @@
 
 | Wire 名称 | Python | 必填 | 类型 |
 | --- | --- | --- | --- |
-| 无 | - | - | - |
+| `limit` | `limit` | 否 | `int` |
+| `cursor` | `cursor` | 否 | `str` |
 
 ### Header 参数
 
@@ -42,7 +43,7 @@
 ## 成功响应
 
 - Python model: `ListAccountsResponse`
-- Contract schema: `ResponseEnvelope[list[Account]]`
+- Contract schema: `ResponseEnvelope[AccountListResult]`
 
 ## Policy
 

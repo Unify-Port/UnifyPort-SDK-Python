@@ -5,6 +5,8 @@
 This report records the local acceptance evidence for the `0.1.0` release candidate on 2026-07-31.
 It distinguishes source/contract verification from registry publication and real-provider E2E.
 
+The following is the historical acceptance record for the initial baseline. See [Contract update](contract-update.md) for the current unreleased synchronization and compatibility notes; historical counts and gates are not release evidence for this update.
+
 ## Frozen baseline
 
 | Item | Accepted value |

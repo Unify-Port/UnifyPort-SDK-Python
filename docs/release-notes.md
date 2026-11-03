@@ -2,6 +2,14 @@
 
 [English](release-notes.md) | [简体中文](zh-CN/release-notes.md)
 
+## Unreleased - Facebook
+
+Adds the facebook provider and four typed standard receiver declarations. Includes sparse media and session-only authorization coverage. HTTP methods, event names and retry policy remain unchanged; provider switches may require a new branch. See the Facebook channel guide. No publication or deployment is implied.
+
+## Unreleased
+
+Synchronize 78 HTTP operations, 218 schemas, numeric error metadata and Webhook types. The package version is unchanged; see [Contract update](contract-update.md).
+
 ## 0.1.0
 
 Initial Python SDK implementation for the public UnifyPort Device API:

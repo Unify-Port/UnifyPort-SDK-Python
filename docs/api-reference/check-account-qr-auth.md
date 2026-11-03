@@ -42,7 +42,7 @@ Authentication headers are not operation inputs; `X-Api-Key` comes only from cli
 ## Success response
 
 - Python model: `CheckAccountQrAuthResponse`
-- Contract schema: `ResponseEnvelope[FreeFormObject]`
+- Contract schema: `ResponseEnvelope[QRAuthCheckData]`
 
 ## Policy
 

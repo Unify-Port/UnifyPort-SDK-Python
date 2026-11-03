@@ -5,7 +5,7 @@
 [官网](https://www.unifyport.ai)
 
 面向公开 UnifyPort Device API 的类型化同步与异步 Python client。SDK 根据已批准的公开 OpenAPI
-contract 生成，当前对齐 `@unifyport/sdk-node` `v0.4.0`：64 个 operation、70 个 component schema，
+contract 生成，当前对齐已批准的公开 Node 源码 `ce60499`：78 个 operation、225 个 component schema，
 以及相同的 retry 和 secret 分类。
 
 Python distribution 名为 `unifyport-sdk`，import package 为 `unifyport`。本仓库从 SDK `0.1.0`
@@ -104,7 +104,7 @@ account = device.get_account(account_id="acc_example", x_request_id="req_example
 ```bash
 python scripts/generate.py
 python scripts/generate.py --check
-python scripts/check_node_parity.py --node-repo ../unifyport-sdk-node --node-ref v0.4.0
+python scripts/check_node_parity.py --node-repo ../UnifyPort-SDK-Nodejs --node-ref ce60499d7169c860ed3f64a686e04bff44316f35
 ```
 
 更多信息见
@@ -135,3 +135,7 @@ pip-audit
 SDK source 使用
 [MIT License](https://github.com/Unify-Port/UnifyPort-SDK-Python/blob/main/LICENSE)。Device API contract
 描述服务接口，并保留自身 license metadata。
+
+当前同步基线是已批准的 Node 源码 `ce60499`，不代表 npm 已发布同等能力。本轮未发布任何包。详见 [本次契约更新](docs/zh-CN/contract-update.md)。
+
+[Facebook 渠道支持](docs/zh-CN/facebook.md)说明 session 授权、消息能力和标准回调。
