@@ -34,7 +34,8 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           repository: Unify-Port/UnifyPort-SDK-Nodejs
-          ref: v0.4.0
+          # 发布门禁必须使用契约记录的已审查源码，旧 npm tag 不含本轮接口与 FB 类型。
+          ref: ce60499d7169c860ed3f64a686e04bff44316f35
           fetch-depth: 0
           path: node-sdk
           persist-credentials: false
@@ -58,7 +59,7 @@ jobs:
       - name: Check generated files
         run: python scripts/generate.py --check
       - name: Check Node contract parity
-        run: python scripts/check_node_parity.py --node-repo node-sdk --node-ref v0.4.0
+        run: python scripts/check_node_parity.py --node-repo node-sdk --node-ref ce60499d7169c860ed3f64a686e04bff44316f35
       - name: Check documentation
         run: python scripts/check_docs.py
       - name: Check format
