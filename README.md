@@ -5,11 +5,13 @@
 [Website](https://www.unifyport.ai)
 
 Type-safe sync and async Python clients for the public UnifyPort Device API. The SDK is generated from
-the approved public OpenAPI contract and currently tracks `@unifyport/sdk-node` `v0.4.0`: 78 operations,
+the approved public OpenAPI contract at Node source `ce60499`: 78 operations,
 225 component schemas, and the same retry and secret-handling classifications.
 
-The Python package is `unifyport-sdk`; the import package is `unifyport`. This repository starts at SDK
-version `0.1.0`. A Git tag or local build alone does not prove that a version reached PyPI.
+The Python package is `unifyport-sdk`; the import package is `unifyport`. The prepared source version is `0.2.0` and is not yet published. A Git tag or local build alone does not prove that a version reached PyPI.
+
+
+Prepared SDK version: `0.2.0` (unreleased). See [release notes](docs/release-notes.md) and the [migration guide](docs/migration.md).
 
 ## Requirements
 

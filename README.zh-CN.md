@@ -8,8 +8,10 @@
 contract 生成，当前对齐已批准的公开 Node 源码 `ce60499`：78 个 operation、225 个 component schema，
 以及相同的 retry 和 secret 分类。
 
-Python distribution 名为 `unifyport-sdk`，import package 为 `unifyport`。本仓库从 SDK `0.1.0`
-开始；仅有 Git tag 或本地 build 不能证明该版本已进入 PyPI。
+Python distribution 名为 `unifyport-sdk`，import package 为 `unifyport`。本次准备源码版本 `0.2.0`，尚未发布；仅有 Git tag 或本地 build 不能证明该版本已进入 PyPI。
+
+
+当前准备的 SDK 版本为 `0.2.0`，尚未发布。详见[发布说明](docs/zh-CN/release-notes.md)和[迁移指南](docs/zh-CN/migration.md)。
 
 ## 环境要求
 
