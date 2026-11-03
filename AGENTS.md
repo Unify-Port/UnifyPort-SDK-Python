@@ -37,7 +37,7 @@
 
 ```bash
 python scripts/generate.py --check
-python scripts/check_node_parity.py --node-repo ../UnifyPort-SDK-Nodejs --node-ref 5901244c409f63fd6b77a899c239ebc9ee96dd50
+python scripts/check_node_parity.py --node-repo ../UnifyPort-SDK-Nodejs --node-ref ce60499d7169c860ed3f64a686e04bff44316f35
 ruff format --check .
 ruff check .
 mypy --strict src scripts typing_tests

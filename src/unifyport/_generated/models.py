@@ -615,6 +615,102 @@ class ErrorEnvelope(TypedDict, total=False):
     request_id: NotRequired[str]
 
 
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookAccountAuthFailedWebhookEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account_id: Required[str]
+    data: Required["_FacebookAccountAuthFailedWebhookEventData"]
+    id: Required[str]
+    occurred_at: Required[str]
+    provider: Required[Literal["facebook"]]
+    type: Required[Literal["account.auth.failed"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookAccountAuthSucceededWebhookEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account_id: Required[str]
+    data: Required["_FacebookAccountAuthSucceededWebhookEventData"]
+    id: Required[str]
+    occurred_at: Required[str]
+    provider: Required[Literal["facebook"]]
+    type: Required[Literal["account.auth.succeeded"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookAccountStatusUpdatedWebhookEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account_id: Required[str]
+    data: Required["_FacebookAccountStatusUpdatedWebhookEventData"]
+    id: Required[str]
+    occurred_at: Required[str]
+    provider: Required[Literal["facebook"]]
+    type: Required[Literal["account.status.updated"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookAttachmentMetadata(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    animated: NotRequired[bool]
+    download_status: NotRequired[
+        Literal["pending", "ready", "failed", "restricted", "expired", "unavailable"]
+    ]
+    duration: NotRequired[float]
+    error_code: NotRequired[str]
+    filename: NotRequired[str]
+    height: NotRequired[float]
+    preview_error_code: NotRequired[str]
+    preview_upload_error_code: NotRequired[str]
+    ptt: NotRequired[bool]
+    sticker_id: NotRequired[str]
+    upload_error_code: NotRequired[str]
+    width: NotRequired[float]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookMessage(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    attachments: NotRequired[list["FacebookMessageAttachment"]]
+    direction: Required[Literal["inbound", "outbound"]]
+    id: Required[str]
+    reply_to_message_id: NotRequired[str]
+    sent_at: NotRequired[str]
+    text: NotRequired[str]
+    type: NotRequired[Literal["sticker"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookMessageAttachment(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    description: NotRequired[str]
+    id: NotRequired[str]
+    metadata: NotRequired["FacebookAttachmentMetadata"]
+    mimetype: NotRequired[str]
+    size: NotRequired[int]
+    thumbnail_url: NotRequired[str]
+    title: NotRequired[str]
+    type: Required[Literal["image", "video", "audio", "document"]]
+    url: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class FacebookMessageReceivedWebhookEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account_id: Required[str]
+    data: Required["_FacebookMessageReceivedWebhookEventData"]
+    id: Required[str]
+    occurred_at: Required[str]
+    provider: Required[Literal["facebook"]]
+    type: Required[Literal["message.received"]]
+
+
 FreeFormObject: TypeAlias = dict[str, JsonValue]
 
 
@@ -2031,6 +2127,7 @@ ProviderInputName: TypeAlias = Literal[
     "whatsapp",
     "line",
     "twitter",
+    "facebook",
     "zalo",
     "tiktok",
     "whatsapp-protocol",
@@ -2045,6 +2142,7 @@ ProviderName: TypeAlias = Literal[
     "whatsapp",
     "line",
     "twitter",
+    "facebook",
     "zalo",
     "tiktok",
     "whatsapp-protocol",
@@ -2491,6 +2589,48 @@ class _ConversationHistoryWebhookEventData(  # type: ignore[call-arg, unused-ign
 class _CreateCallRequestTo(TypedDict, total=False):
     id: Required[str]
     type: Required["ConversationType"]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class _FacebookAccountAuthFailedWebhookEventData(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account: NotRequired["__FacebookAccountAuthFailedWebhookEventDataAccount"]
+    auth_status: Required[Literal["failed"]]
+    event: NotRequired["__FacebookAccountAuthFailedWebhookEventDataEvent"]
+    last_error: NotRequired[str]
+    runtime_status: Required[Literal["disconnected"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class _FacebookAccountAuthSucceededWebhookEventData(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account: NotRequired["__FacebookAccountAuthSucceededWebhookEventDataAccount"]
+    auth_status: Required[Literal["authorized"]]
+    event: NotRequired["__FacebookAccountAuthSucceededWebhookEventDataEvent"]
+    runtime_status: Required[Literal["running"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class _FacebookAccountStatusUpdatedWebhookEventData(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account: NotRequired["__FacebookAccountStatusUpdatedWebhookEventDataAccount"]
+    event: NotRequired["__FacebookAccountStatusUpdatedWebhookEventDataEvent"]
+    last_error: NotRequired[str]
+    runtime_status: Required[Literal["error"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class _FacebookMessageReceivedWebhookEventData(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    account: NotRequired["__FacebookMessageReceivedWebhookEventDataAccount"]
+    conversation: Required["__FacebookMessageReceivedWebhookEventDataConversation"]
+    event: NotRequired["__FacebookMessageReceivedWebhookEventDataEvent"]
+    message: Required["FacebookMessage"]
+    sender: Required["__FacebookMessageReceivedWebhookEventDataSender"]
 
 
 # mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
@@ -3237,6 +3377,82 @@ class __CallMessageWebhookEventDataSender(TypedDict, total=False):
 class __ConversationHistoryWebhookEventDataConversation(TypedDict, total=False):
     id: Required[str]
     type: Required["ConversationType"]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookAccountAuthFailedWebhookEventDataAccount(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    provider_account_ref: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookAccountAuthFailedWebhookEventDataEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    kind: NotRequired[str]
+    runtime_status: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookAccountAuthSucceededWebhookEventDataAccount(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    provider_account_ref: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookAccountAuthSucceededWebhookEventDataEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    kind: NotRequired[str]
+    runtime_status: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookAccountStatusUpdatedWebhookEventDataAccount(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    provider_account_ref: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookAccountStatusUpdatedWebhookEventDataEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    kind: NotRequired[str]
+    runtime_status: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookMessageReceivedWebhookEventDataAccount(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    provider_account_ref: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookMessageReceivedWebhookEventDataConversation(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    id: Required[str]
+    type: Required[Literal["user"]]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookMessageReceivedWebhookEventDataEvent(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    kind: NotRequired[str]
+    runtime_status: NotRequired[str]
+
+
+# mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
+class __FacebookMessageReceivedWebhookEventDataSender(  # type: ignore[call-arg, unused-ignore]
+    TypedDict, total=False, extra_items=JsonValue
+):
+    id: Required[str]
+    type: Required[Literal["user"]]
 
 
 # mypy 2.3 尚未识别 PEP 728；unused-ignore 避免 checker 升级后产生漂移。
@@ -17907,6 +18123,13 @@ SCHEMA_NAMES: Final = (
     "EndedCallData",
     "Error",
     "ErrorEnvelope",
+    "FacebookAccountAuthFailedWebhookEvent",
+    "FacebookAccountAuthSucceededWebhookEvent",
+    "FacebookAccountStatusUpdatedWebhookEvent",
+    "FacebookAttachmentMetadata",
+    "FacebookMessage",
+    "FacebookMessageAttachment",
+    "FacebookMessageReceivedWebhookEvent",
     "FreeFormObject",
     "Group",
     "GroupAnnouncementChange",
@@ -18145,6 +18368,13 @@ __all__ = [
     "EndedCallData",
     "Error",
     "ErrorEnvelope",
+    "FacebookAccountAuthFailedWebhookEvent",
+    "FacebookAccountAuthSucceededWebhookEvent",
+    "FacebookAccountStatusUpdatedWebhookEvent",
+    "FacebookAttachmentMetadata",
+    "FacebookMessage",
+    "FacebookMessageAttachment",
+    "FacebookMessageReceivedWebhookEvent",
     "FreeFormObject",
     "Group",
     "GroupAnnouncementChange",
@@ -18376,6 +18606,10 @@ __all__ = [
     "_ConversationExtra",
     "_ConversationHistoryWebhookEventData",
     "_CreateCallRequestTo",
+    "_FacebookAccountAuthFailedWebhookEventData",
+    "_FacebookAccountAuthSucceededWebhookEventData",
+    "_FacebookAccountStatusUpdatedWebhookEventData",
+    "_FacebookMessageReceivedWebhookEventData",
     "_GroupExtra",
     "_GroupSettingsUpdatedWebhookEventData",
     "_MessageCommerceHistoryWebhookEventData",
@@ -18488,6 +18722,16 @@ __all__ = [
     "__CallMessageWebhookEventDataEvent",
     "__CallMessageWebhookEventDataSender",
     "__ConversationHistoryWebhookEventDataConversation",
+    "__FacebookAccountAuthFailedWebhookEventDataAccount",
+    "__FacebookAccountAuthFailedWebhookEventDataEvent",
+    "__FacebookAccountAuthSucceededWebhookEventDataAccount",
+    "__FacebookAccountAuthSucceededWebhookEventDataEvent",
+    "__FacebookAccountStatusUpdatedWebhookEventDataAccount",
+    "__FacebookAccountStatusUpdatedWebhookEventDataEvent",
+    "__FacebookMessageReceivedWebhookEventDataAccount",
+    "__FacebookMessageReceivedWebhookEventDataConversation",
+    "__FacebookMessageReceivedWebhookEventDataEvent",
+    "__FacebookMessageReceivedWebhookEventDataSender",
     "__MessageCommerceHistoryWebhookEventDataMessage",
     "__MessageCommerceHistoryWebhookEventDataMessageVariant1",
     "__MessageCommerceHistoryWebhookEventDataMessageVariant2",

@@ -143,8 +143,8 @@ def test_all_public_webhook_examples_have_static_type_cases() -> None:
     cases = json.loads((ROOT / "tests/fixtures/webhook-examples.json").read_text())
     module = ast.parse((ROOT / "pyright_tests/webhook_examples.py").read_text())
     declarations = [node for node in module.body if isinstance(node, ast.AnnAssign)]
-    assert len(cases) == len(declarations) == 49
-    assert len({case["schema"] for case in cases}) == 25
+    assert len(cases) == len(declarations) == 57
+    assert len({case["schema"] for case in cases}) == 29
     for case, declaration in zip(cases, declarations, strict=True):
         assert isinstance(declaration.annotation, ast.Attribute)
         assert declaration.annotation.attr == case["schema"]

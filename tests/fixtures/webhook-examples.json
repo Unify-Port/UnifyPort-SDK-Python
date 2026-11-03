@@ -1,5 +1,276 @@
 [
   {
+    "name": "facebookMessageReceived/inbound",
+    "schema": "FacebookMessageReceivedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_1",
+      "type": "message.received",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "conversation": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "sender": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "message": {
+          "id": "9007199254740993",
+          "direction": "inbound",
+          "text": "Hello",
+          "sent_at": "2026-01-01T00:00:00.123456789Z",
+          "reply_to_message_id": "9007199254740991"
+        },
+        "event": {
+          "kind": "message_received"
+        }
+      }
+    }
+  },
+  {
+    "name": "facebookMessageReceived/outbound",
+    "schema": "FacebookMessageReceivedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_2",
+      "type": "message.received",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "conversation": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "sender": {
+          "id": "9007199254740997",
+          "type": "user"
+        },
+        "message": {
+          "id": "9007199254740994",
+          "direction": "outbound",
+          "text": ""
+        },
+        "event": {
+          "kind": "message_received"
+        }
+      }
+    }
+  },
+  {
+    "name": "facebookMessageReceived/orderedMedia",
+    "schema": "FacebookMessageReceivedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_3",
+      "type": "message.received",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "conversation": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "sender": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "message": {
+          "id": "9007199254740996",
+          "direction": "inbound",
+          "attachments": [
+            {
+              "id": "image_example",
+              "type": "image",
+              "url": "https://media.example.com/image.jpg",
+              "thumbnail_url": "https://media.example.com/preview.jpg",
+              "size": 0,
+              "metadata": {
+                "filename": "example.jpg",
+                "width": 0,
+                "height": 0,
+                "animated": false,
+                "download_status": "ready"
+              }
+            },
+            {
+              "id": "audio_example",
+              "type": "audio",
+              "metadata": {
+                "duration": 0,
+                "ptt": false,
+                "download_status": "failed",
+                "error_code": "download_failed"
+              }
+            }
+          ]
+        },
+        "event": {
+          "kind": "message_received"
+        }
+      }
+    }
+  },
+  {
+    "name": "facebookMessageReceived/sticker",
+    "schema": "FacebookMessageReceivedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_4",
+      "type": "message.received",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "conversation": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "sender": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "message": {
+          "id": "9007199254740998",
+          "direction": "inbound",
+          "type": "sticker",
+          "attachments": [
+            {
+              "type": "image",
+              "metadata": {
+                "sticker_id": "sticker_example",
+                "animated": false
+              }
+            }
+          ]
+        },
+        "event": {
+          "kind": "message_received"
+        }
+      }
+    }
+  },
+  {
+    "name": "facebookMessageReceived/missingMedia",
+    "schema": "FacebookMessageReceivedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_5",
+      "type": "message.received",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "conversation": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "sender": {
+          "id": "9007199254740995",
+          "type": "user"
+        },
+        "message": {
+          "id": "9007199254740999",
+          "direction": "inbound",
+          "attachments": [
+            {
+              "type": "document",
+              "metadata": {
+                "filename": "example.pdf",
+                "download_status": "restricted"
+              }
+            }
+          ]
+        },
+        "event": {
+          "kind": "message_received"
+        }
+      }
+    }
+  },
+  {
+    "name": "facebookAccountAuthSucceeded/example",
+    "schema": "FacebookAccountAuthSucceededWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_6",
+      "type": "account.auth.succeeded",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "event": {
+          "kind": "account_auth_succeeded",
+          "runtime_status": "running"
+        },
+        "runtime_status": "running",
+        "auth_status": "authorized"
+      }
+    }
+  },
+  {
+    "name": "facebookAccountStatusUpdated/example",
+    "schema": "FacebookAccountStatusUpdatedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_7",
+      "type": "account.status.updated",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "event": {
+          "kind": "account_status_updated",
+          "runtime_status": "error"
+        },
+        "runtime_status": "error",
+        "last_error": "network_timeout"
+      }
+    }
+  },
+  {
+    "name": "facebookAccountAuthFailed/example",
+    "schema": "FacebookAccountAuthFailedWebhookEvent",
+    "body": {
+      "id": "evt_facebook_example_8",
+      "type": "account.auth.failed",
+      "provider": "facebook",
+      "account_id": "acc_example",
+      "occurred_at": "2026-01-01T00:00:00.123456789Z",
+      "data": {
+        "account": {
+          "provider_account_ref": "9007199254740997"
+        },
+        "event": {
+          "kind": "account_auth_failed",
+          "runtime_status": "disconnected"
+        },
+        "runtime_status": "disconnected",
+        "auth_status": "failed",
+        "last_error": "cookie_expired"
+      }
+    }
+  },
+  {
     "name": "contactUpdated/renamed",
     "schema": "ContactUpdatedWebhookEvent",
     "body": {
@@ -91,7 +362,7 @@
       "type": "conversation.updated",
       "provider": "whatsapp",
       "account_id": "acc_example_001",
-      "occurred_at": "2026-09-21T03:00:00.123000Z",
+      "occurred_at": "2026-09-21T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "100000000000002@lid",
@@ -109,7 +380,7 @@
         "event": {
           "kind": "conversation_updated",
           "change_type": "disappearing_messages",
-          "changed_at": "2026-09-21T03:00:00.123000Z"
+          "changed_at": "2026-09-21T03:00:00.123Z"
         }
       }
     }
@@ -209,7 +480,7 @@
       "type": "message.updated",
       "provider": "whatsapp",
       "account_id": "acc_example_001",
-      "occurred_at": "2026-09-21T03:00:00.123000Z",
+      "occurred_at": "2026-09-21T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",
@@ -220,7 +491,7 @@
           "pin": {
             "pinned": true,
             "duration_seconds": 86400,
-            "expires_at": "2026-09-22T03:00:00.123000Z"
+            "expires_at": "2026-09-22T03:00:00.123Z"
           }
         },
         "actor": {
@@ -234,7 +505,7 @@
         "event": {
           "kind": "message_updated",
           "change_type": "message_pin",
-          "changed_at": "2026-09-21T03:00:00.123000Z"
+          "changed_at": "2026-09-21T03:00:00.123Z"
         }
       }
     }
@@ -307,7 +578,7 @@
       "type": "message.received",
       "provider": "whatsapp",
       "account_id": "acc_example",
-      "occurred_at": "2026-09-22T03:00:00.123000Z",
+      "occurred_at": "2026-09-22T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",
@@ -350,7 +621,7 @@
       "type": "message.updated",
       "provider": "whatsapp",
       "account_id": "acc_example",
-      "occurred_at": "2026-09-22T03:00:00.123000Z",
+      "occurred_at": "2026-09-22T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",
@@ -362,7 +633,7 @@
           "poll_vote": {
             "status": "decoded",
             "voter_id": "100000000000002@lid",
-            "voted_at": "2026-09-22T03:00:00.123000Z",
+            "voted_at": "2026-09-22T03:00:00.123Z",
             "selected_option_ids": [
               "option_monday"
             ]
@@ -387,7 +658,7 @@
       "type": "message.updated",
       "provider": "whatsapp",
       "account_id": "acc_example",
-      "occurred_at": "2026-09-22T03:00:00.123000Z",
+      "occurred_at": "2026-09-22T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",
@@ -399,7 +670,7 @@
           "poll_vote": {
             "status": "decoded",
             "voter_id": "100000000000002@lid",
-            "voted_at": "2026-09-22T03:00:00.123000Z",
+            "voted_at": "2026-09-22T03:00:00.123Z",
             "selected_option_ids": [
               "option_tuesday"
             ]
@@ -424,7 +695,7 @@
       "type": "message.updated",
       "provider": "whatsapp",
       "account_id": "acc_example",
-      "occurred_at": "2026-09-22T03:00:00.123000Z",
+      "occurred_at": "2026-09-22T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",
@@ -436,7 +707,7 @@
           "poll_vote": {
             "status": "decoded",
             "voter_id": "100000000000002@lid",
-            "voted_at": "2026-09-22T03:00:00.123000Z",
+            "voted_at": "2026-09-22T03:00:00.123Z",
             "selected_option_ids": []
           }
         },
@@ -459,7 +730,7 @@
       "type": "message.updated",
       "provider": "whatsapp",
       "account_id": "acc_example",
-      "occurred_at": "2026-09-22T03:00:00.123000Z",
+      "occurred_at": "2026-09-22T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",
@@ -471,7 +742,7 @@
           "poll_vote": {
             "status": "unavailable",
             "voter_id": "100000000000002@lid",
-            "voted_at": "2026-09-22T03:00:00.123000Z",
+            "voted_at": "2026-09-22T03:00:00.123Z",
             "reason": "unknown"
           }
         },
@@ -494,7 +765,7 @@
       "type": "conversation.history",
       "provider": "whatsapp",
       "account_id": "acc_example",
-      "occurred_at": "2026-09-22T03:00:00.123000Z",
+      "occurred_at": "2026-09-22T03:00:00.123Z",
       "data": {
         "conversation": {
           "id": "120000000000001@g.us",

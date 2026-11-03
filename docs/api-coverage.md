@@ -6,7 +6,7 @@
 | --- | ---: | --- |
 | OpenAPI paths | 69 | Approved source snapshot |
 | OpenAPI operations | 78 | 78 sync + 78 async generated methods |
-| Component schemas | 218 | Generated Python model/type names |
+| Component schemas | 225 | Generated Python model/type names |
 | Tags | 13 | Preserved in operation metadata |
 | Retryable operations | 19 | Exact allowlist |
 | Destructive operations | 8 | Exact reviewed classification |

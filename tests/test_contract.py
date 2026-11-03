@@ -11,7 +11,7 @@ from unifyport._generated import OPERATIONS, models
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_PATH = ROOT / "contracts/device.openapi.yaml"
-EXPECTED_CONTRACT_SHA256 = "47face9790a454fb0d6204721785846427ca7ead23cf854061ab54646682e904"
+EXPECTED_CONTRACT_SHA256 = "8190a34dc8ed60476f79e00b37d9dea418082886724ee6d64efa389f440adffc"
 EXPECTED_RETRYABLE = {
     "getAccount",
     "getAccountAuthState",
@@ -92,12 +92,12 @@ def test_contract_is_exact_approved_node_source() -> None:
     assert digest == EXPECTED_CONTRACT_SHA256
     assert source["nodeSdk"]["version"] == "0.4.0"
     assert source["nodeSdk"]["baselineKind"] == "approved-source"
-    assert source["nodeSdk"]["ref"] == "5901244c409f63fd6b77a899c239ebc9ee96dd50"
+    assert source["nodeSdk"]["ref"] == "ce60499d7169c860ed3f64a686e04bff44316f35"
     assert source["contract"] == {
         "path": "contracts/device.openapi.yaml",
         "sha256": EXPECTED_CONTRACT_SHA256,
         "operationCount": 78,
-        "schemaCount": 218,
+        "schemaCount": 225,
     }
 
 
@@ -148,11 +148,13 @@ def test_provider_profile_and_provider_names_remain_public_contract_types() -> N
     }
     assert models.ProviderProfile.__optional_keys__ == set(provider_profile["properties"])
     assert models.ProviderProfile.__extra_items__ == models.JsonValue
+    # 新增 FB 后仍精确保留旧渠道，防止生成时丢失或放宽枚举。
     assert schemas["ProviderName"]["enum"] == [
         "telegram",
         "whatsapp",
         "line",
         "twitter",
+        "facebook",
         "zalo",
         "tiktok",
         "whatsapp-protocol",

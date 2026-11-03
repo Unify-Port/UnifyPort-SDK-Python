@@ -73,7 +73,7 @@ def test_generated_operation_and_schema_coverage_is_complete() -> None:
     assert len(NODE_OPERATION_IDS) == 78
     assert len(OPERATIONS) == 78
     assert len(PYTHON_METHODS) == 78
-    assert len(SCHEMA_NAMES) == 218
+    assert len(SCHEMA_NAMES) == 225
     assert tuple(OPERATIONS) == NODE_OPERATION_IDS
     assert set(PYTHON_METHODS.values()) == set(NODE_OPERATION_IDS)
 
@@ -109,7 +109,7 @@ def test_every_public_operation_annotation_is_runtime_resolvable() -> None:
 def test_generated_manifest_preserves_node_and_python_method_mapping() -> None:
     manifest = json.loads((ROOT / "parity/manifest.gen.json").read_text(encoding="utf-8"))
     assert manifest["operationCount"] == 78
-    assert manifest["schemaCount"] == 218
+    assert manifest["schemaCount"] == 225
     assert manifest["policyCounts"] == {
         "retryable": 19,
         "destructive": 8,

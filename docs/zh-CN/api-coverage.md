@@ -6,7 +6,7 @@
 | --- | ---: | --- |
 | OpenAPI paths | 69 | 已批准的公开源码快照 |
 | OpenAPI operations | 78 | 78 个同步 + 78 个异步 generated method |
-| Component schemas | 218 | 生成 Python model/type name |
+| Component schemas | 225 | 生成 Python model/type name |
 | Tags | 13 | 保留在 operation metadata 中 |
 | Retryable operations | 19 | 精确 allowlist |
 | Destructive operations | 8 | 精确评审分类 |

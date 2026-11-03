@@ -1,9 +1,170 @@
-"""Public contract examples exercise nested Webhook types without network access."""
+"""Generated public Webhook examples; update the contract and regenerate."""
 
 from unifyport import models
 
-# 公开样例覆盖稀疏事件与空值，避免生成类型在嵌套对象中退化成普通字典。
-example_0: models.ContactUpdatedWebhookEvent = {
+# 公开样例必须接受生成类型检查，保留稀疏字段和显式零值。
+example_0: models.FacebookMessageReceivedWebhookEvent = {
+    "id": "evt_facebook_example_1",
+    "type": "message.received",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "conversation": {"id": "9007199254740995", "type": "user"},
+        "sender": {"id": "9007199254740995", "type": "user"},
+        "message": {
+            "id": "9007199254740993",
+            "direction": "inbound",
+            "text": "Hello",
+            "sent_at": "2026-01-01T00:00:00.123456789Z",
+            "reply_to_message_id": "9007199254740991",
+        },
+        "event": {"kind": "message_received"},
+    },
+}
+example_1: models.FacebookMessageReceivedWebhookEvent = {
+    "id": "evt_facebook_example_2",
+    "type": "message.received",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "conversation": {"id": "9007199254740995", "type": "user"},
+        "sender": {"id": "9007199254740997", "type": "user"},
+        "message": {"id": "9007199254740994", "direction": "outbound", "text": ""},
+        "event": {"kind": "message_received"},
+    },
+}
+example_2: models.FacebookMessageReceivedWebhookEvent = {
+    "id": "evt_facebook_example_3",
+    "type": "message.received",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "conversation": {"id": "9007199254740995", "type": "user"},
+        "sender": {"id": "9007199254740995", "type": "user"},
+        "message": {
+            "id": "9007199254740996",
+            "direction": "inbound",
+            "attachments": [
+                {
+                    "id": "image_example",
+                    "type": "image",
+                    "url": "https://media.example.com/image.jpg",
+                    "thumbnail_url": "https://media.example.com/preview.jpg",
+                    "size": 0,
+                    "metadata": {
+                        "filename": "example.jpg",
+                        "width": 0,
+                        "height": 0,
+                        "animated": False,
+                        "download_status": "ready",
+                    },
+                },
+                {
+                    "id": "audio_example",
+                    "type": "audio",
+                    "metadata": {
+                        "duration": 0,
+                        "ptt": False,
+                        "download_status": "failed",
+                        "error_code": "download_failed",
+                    },
+                },
+            ],
+        },
+        "event": {"kind": "message_received"},
+    },
+}
+example_3: models.FacebookMessageReceivedWebhookEvent = {
+    "id": "evt_facebook_example_4",
+    "type": "message.received",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "conversation": {"id": "9007199254740995", "type": "user"},
+        "sender": {"id": "9007199254740995", "type": "user"},
+        "message": {
+            "id": "9007199254740998",
+            "direction": "inbound",
+            "type": "sticker",
+            "attachments": [
+                {"type": "image", "metadata": {"sticker_id": "sticker_example", "animated": False}}
+            ],
+        },
+        "event": {"kind": "message_received"},
+    },
+}
+example_4: models.FacebookMessageReceivedWebhookEvent = {
+    "id": "evt_facebook_example_5",
+    "type": "message.received",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "conversation": {"id": "9007199254740995", "type": "user"},
+        "sender": {"id": "9007199254740995", "type": "user"},
+        "message": {
+            "id": "9007199254740999",
+            "direction": "inbound",
+            "attachments": [
+                {
+                    "type": "document",
+                    "metadata": {"filename": "example.pdf", "download_status": "restricted"},
+                }
+            ],
+        },
+        "event": {"kind": "message_received"},
+    },
+}
+example_5: models.FacebookAccountAuthSucceededWebhookEvent = {
+    "id": "evt_facebook_example_6",
+    "type": "account.auth.succeeded",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "event": {"kind": "account_auth_succeeded", "runtime_status": "running"},
+        "runtime_status": "running",
+        "auth_status": "authorized",
+    },
+}
+example_6: models.FacebookAccountStatusUpdatedWebhookEvent = {
+    "id": "evt_facebook_example_7",
+    "type": "account.status.updated",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "event": {"kind": "account_status_updated", "runtime_status": "error"},
+        "runtime_status": "error",
+        "last_error": "network_timeout",
+    },
+}
+example_7: models.FacebookAccountAuthFailedWebhookEvent = {
+    "id": "evt_facebook_example_8",
+    "type": "account.auth.failed",
+    "provider": "facebook",
+    "account_id": "acc_example",
+    "occurred_at": "2026-01-01T00:00:00.123456789Z",
+    "data": {
+        "account": {"provider_account_ref": "9007199254740997"},
+        "event": {"kind": "account_auth_failed", "runtime_status": "disconnected"},
+        "runtime_status": "disconnected",
+        "auth_status": "failed",
+        "last_error": "cookie_expired",
+    },
+}
+example_8: models.ContactUpdatedWebhookEvent = {
     "id": "evt_example_127019",
     "type": "contact.updated",
     "provider": "whatsapp",
@@ -23,8 +184,7 @@ example_0: models.ContactUpdatedWebhookEvent = {
         },
     },
 }
-
-example_1: models.ContactUpdatedWebhookEvent = {
+example_9: models.ContactUpdatedWebhookEvent = {
     "id": "evt_example_127947",
     "type": "contact.updated",
     "provider": "whatsapp",
@@ -40,8 +200,7 @@ example_1: models.ContactUpdatedWebhookEvent = {
         },
     },
 }
-
-example_2: models.ContactUpdatedWebhookEvent = {
+example_10: models.ContactUpdatedWebhookEvent = {
     "id": "evt_example_128706",
     "type": "contact.updated",
     "provider": "whatsapp",
@@ -60,13 +219,12 @@ example_2: models.ContactUpdatedWebhookEvent = {
         },
     },
 }
-
-example_3: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
+example_11: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
     "id": "evt_example_130476",
     "type": "conversation.updated",
     "provider": "whatsapp",
     "account_id": "acc_example_001",
-    "occurred_at": "2026-09-21T03:00:00.123000Z",
+    "occurred_at": "2026-09-21T03:00:00.123Z",
     "data": {
         "conversation": {"id": "100000000000002@lid", "type": "user"},
         "disappearing_messages": {"enabled": True, "duration_seconds": 86400},
@@ -74,12 +232,11 @@ example_3: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
         "event": {
             "kind": "conversation_updated",
             "change_type": "disappearing_messages",
-            "changed_at": "2026-09-21T03:00:00.123000Z",
+            "changed_at": "2026-09-21T03:00:00.123Z",
         },
     },
 }
-
-example_4: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
+example_12: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
     "id": "evt_example_131405",
     "type": "conversation.updated",
     "provider": "whatsapp",
@@ -96,8 +253,7 @@ example_4: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
         },
     },
 }
-
-example_5: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
+example_13: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
     "id": "evt_example_132320",
     "type": "conversation.updated",
     "provider": "whatsapp",
@@ -114,8 +270,7 @@ example_5: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
         },
     },
 }
-
-example_6: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
+example_14: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
     "id": "evt_example_133252",
     "type": "conversation.updated",
     "provider": "whatsapp",
@@ -127,13 +282,12 @@ example_6: models.ConversationDisappearingMessagesUpdatedWebhookEvent = {
         "event": {"kind": "conversation_updated", "change_type": "disappearing_messages"},
     },
 }
-
-example_7: models.MessagePinUpdatedWebhookEvent = {
+example_15: models.MessagePinUpdatedWebhookEvent = {
     "id": "evt_example_134940",
     "type": "message.updated",
     "provider": "whatsapp",
     "account_id": "acc_example_001",
-    "occurred_at": "2026-09-21T03:00:00.123000Z",
+    "occurred_at": "2026-09-21T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "message": {
@@ -141,7 +295,7 @@ example_7: models.MessagePinUpdatedWebhookEvent = {
             "pin": {
                 "pinned": True,
                 "duration_seconds": 86400,
-                "expires_at": "2026-09-22T03:00:00.123000Z",
+                "expires_at": "2026-09-22T03:00:00.123Z",
             },
         },
         "actor": {"id": "100000000000002@lid", "type": "user"},
@@ -149,12 +303,11 @@ example_7: models.MessagePinUpdatedWebhookEvent = {
         "event": {
             "kind": "message_updated",
             "change_type": "message_pin",
-            "changed_at": "2026-09-21T03:00:00.123000Z",
+            "changed_at": "2026-09-21T03:00:00.123Z",
         },
     },
 }
-
-example_8: models.MessagePinUpdatedWebhookEvent = {
+example_16: models.MessagePinUpdatedWebhookEvent = {
     "id": "evt_example_136025",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -171,8 +324,7 @@ example_8: models.MessagePinUpdatedWebhookEvent = {
         },
     },
 }
-
-example_9: models.MessagePinUpdatedWebhookEvent = {
+example_17: models.MessagePinUpdatedWebhookEvent = {
     "id": "evt_example_136901",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -184,13 +336,12 @@ example_9: models.MessagePinUpdatedWebhookEvent = {
         "event": {"kind": "message_updated", "change_type": "message_pin"},
     },
 }
-
-example_10: models.MessagePollReceivedWebhookEvent = {
+example_18: models.MessagePollReceivedWebhookEvent = {
     "id": "evt_example_138228",
     "type": "message.received",
     "provider": "whatsapp",
     "account_id": "acc_example",
-    "occurred_at": "2026-09-22T03:00:00.123000Z",
+    "occurred_at": "2026-09-22T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "sender": {"id": "100000000000001@lid", "type": "user"},
@@ -210,13 +361,12 @@ example_10: models.MessagePollReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_11: models.MessagePollVoteUpdatedWebhookEvent = {
+example_19: models.MessagePollVoteUpdatedWebhookEvent = {
     "id": "evt_example_140068",
     "type": "message.updated",
     "provider": "whatsapp",
     "account_id": "acc_example",
-    "occurred_at": "2026-09-22T03:00:00.123000Z",
+    "occurred_at": "2026-09-22T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "message": {
@@ -225,7 +375,7 @@ example_11: models.MessagePollVoteUpdatedWebhookEvent = {
             "poll_vote": {
                 "status": "decoded",
                 "voter_id": "100000000000002@lid",
-                "voted_at": "2026-09-22T03:00:00.123000Z",
+                "voted_at": "2026-09-22T03:00:00.123Z",
                 "selected_option_ids": ["option_monday"],
             },
         },
@@ -233,13 +383,12 @@ example_11: models.MessagePollVoteUpdatedWebhookEvent = {
         "event": {"kind": "message_updated", "change_type": "poll_vote"},
     },
 }
-
-example_12: models.MessagePollVoteUpdatedWebhookEvent = {
+example_20: models.MessagePollVoteUpdatedWebhookEvent = {
     "id": "evt_example_141122",
     "type": "message.updated",
     "provider": "whatsapp",
     "account_id": "acc_example",
-    "occurred_at": "2026-09-22T03:00:00.123000Z",
+    "occurred_at": "2026-09-22T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "message": {
@@ -248,7 +397,7 @@ example_12: models.MessagePollVoteUpdatedWebhookEvent = {
             "poll_vote": {
                 "status": "decoded",
                 "voter_id": "100000000000002@lid",
-                "voted_at": "2026-09-22T03:00:00.123000Z",
+                "voted_at": "2026-09-22T03:00:00.123Z",
                 "selected_option_ids": ["option_tuesday"],
             },
         },
@@ -256,13 +405,12 @@ example_12: models.MessagePollVoteUpdatedWebhookEvent = {
         "event": {"kind": "message_updated", "change_type": "poll_vote"},
     },
 }
-
-example_13: models.MessagePollVoteUpdatedWebhookEvent = {
+example_21: models.MessagePollVoteUpdatedWebhookEvent = {
     "id": "evt_example_142170",
     "type": "message.updated",
     "provider": "whatsapp",
     "account_id": "acc_example",
-    "occurred_at": "2026-09-22T03:00:00.123000Z",
+    "occurred_at": "2026-09-22T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "message": {
@@ -271,7 +419,7 @@ example_13: models.MessagePollVoteUpdatedWebhookEvent = {
             "poll_vote": {
                 "status": "decoded",
                 "voter_id": "100000000000002@lid",
-                "voted_at": "2026-09-22T03:00:00.123000Z",
+                "voted_at": "2026-09-22T03:00:00.123Z",
                 "selected_option_ids": [],
             },
         },
@@ -279,13 +427,12 @@ example_13: models.MessagePollVoteUpdatedWebhookEvent = {
         "event": {"kind": "message_updated", "change_type": "poll_vote"},
     },
 }
-
-example_14: models.MessagePollVoteUpdatedWebhookEvent = {
+example_22: models.MessagePollVoteUpdatedWebhookEvent = {
     "id": "evt_example_143180",
     "type": "message.updated",
     "provider": "whatsapp",
     "account_id": "acc_example",
-    "occurred_at": "2026-09-22T03:00:00.123000Z",
+    "occurred_at": "2026-09-22T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "message": {
@@ -294,7 +441,7 @@ example_14: models.MessagePollVoteUpdatedWebhookEvent = {
             "poll_vote": {
                 "status": "unavailable",
                 "voter_id": "100000000000002@lid",
-                "voted_at": "2026-09-22T03:00:00.123000Z",
+                "voted_at": "2026-09-22T03:00:00.123Z",
                 "reason": "unknown",
             },
         },
@@ -302,13 +449,12 @@ example_14: models.MessagePollVoteUpdatedWebhookEvent = {
         "event": {"kind": "message_updated", "change_type": "poll_vote"},
     },
 }
-
-example_15: models.MessagePollHistoryWebhookEvent = {
+example_23: models.MessagePollHistoryWebhookEvent = {
     "id": "evt_example_144750",
     "type": "conversation.history",
     "provider": "whatsapp",
     "account_id": "acc_example",
-    "occurred_at": "2026-09-22T03:00:00.123000Z",
+    "occurred_at": "2026-09-22T03:00:00.123Z",
     "data": {
         "conversation": {"id": "120000000000001@g.us", "type": "group"},
         "messages": [
@@ -330,8 +476,7 @@ example_15: models.MessagePollHistoryWebhookEvent = {
         "event": {"kind": "conversation_history"},
     },
 }
-
-example_16: models.MessageLinkPreviewReceivedWebhookEvent = {
+example_24: models.MessageLinkPreviewReceivedWebhookEvent = {
     "id": "evt_example_146824",
     "type": "message.received",
     "provider": "whatsapp",
@@ -354,8 +499,7 @@ example_16: models.MessageLinkPreviewReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_17: models.MessageLinkPreviewReceivedWebhookEvent = {
+example_25: models.MessageLinkPreviewReceivedWebhookEvent = {
     "id": "evt_example_147918",
     "type": "message.received",
     "provider": "whatsapp",
@@ -373,8 +517,7 @@ example_17: models.MessageLinkPreviewReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_18: models.MessageLinkPreviewUpdatedWebhookEvent = {
+example_26: models.MessageLinkPreviewUpdatedWebhookEvent = {
     "id": "evt_example_149615",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -393,8 +536,7 @@ example_18: models.MessageLinkPreviewUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_19: models.MessageLinkPreviewUpdatedWebhookEvent = {
+example_27: models.MessageLinkPreviewUpdatedWebhookEvent = {
     "id": "evt_example_150448",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -410,8 +552,7 @@ example_19: models.MessageLinkPreviewUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_20: models.MessageLinkPreviewUpdatedWebhookEvent = {
+example_28: models.MessageLinkPreviewUpdatedWebhookEvent = {
     "id": "evt_example_151301",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -427,8 +568,7 @@ example_20: models.MessageLinkPreviewUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_21: models.MessageLinkPreviewHistoryWebhookEvent = {
+example_29: models.MessageLinkPreviewHistoryWebhookEvent = {
     "id": "evt_example_152781",
     "type": "conversation.history",
     "provider": "whatsapp",
@@ -465,8 +605,7 @@ example_21: models.MessageLinkPreviewHistoryWebhookEvent = {
         ],
     },
 }
-
-example_22: models.MessageInteractiveReceivedWebhookEvent = {
+example_30: models.MessageInteractiveReceivedWebhookEvent = {
     "id": "evt_example_155214",
     "type": "message.received",
     "provider": "whatsapp",
@@ -495,8 +634,7 @@ example_22: models.MessageInteractiveReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_23: models.MessageInteractiveReceivedWebhookEvent = {
+example_31: models.MessageInteractiveReceivedWebhookEvent = {
     "id": "evt_example_156729",
     "type": "message.received",
     "provider": "whatsapp",
@@ -534,8 +672,7 @@ example_23: models.MessageInteractiveReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_24: models.MessageInteractiveReceivedWebhookEvent = {
+example_32: models.MessageInteractiveReceivedWebhookEvent = {
     "id": "evt_example_158417",
     "type": "message.received",
     "provider": "whatsapp",
@@ -559,8 +696,7 @@ example_24: models.MessageInteractiveReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_25: models.MessageInteractiveReceivedWebhookEvent = {
+example_33: models.MessageInteractiveReceivedWebhookEvent = {
     "id": "evt_example_159498",
     "type": "message.received",
     "provider": "whatsapp",
@@ -579,8 +715,7 @@ example_25: models.MessageInteractiveReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_26: models.MessageInteractiveUpdatedWebhookEvent = {
+example_34: models.MessageInteractiveUpdatedWebhookEvent = {
     "id": "evt_example_161269",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -598,8 +733,7 @@ example_26: models.MessageInteractiveUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_27: models.MessageInteractiveHistoryWebhookEvent = {
+example_35: models.MessageInteractiveHistoryWebhookEvent = {
     "id": "evt_example_163002",
     "type": "conversation.history",
     "provider": "whatsapp",
@@ -648,8 +782,7 @@ example_27: models.MessageInteractiveHistoryWebhookEvent = {
         ],
     },
 }
-
-example_28: models.MessageCommerceReceivedWebhookEvent = {
+example_36: models.MessageCommerceReceivedWebhookEvent = {
     "id": "evt_example_166040",
     "type": "message.received",
     "provider": "whatsapp",
@@ -675,8 +808,7 @@ example_28: models.MessageCommerceReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_29: models.MessageCommerceReceivedWebhookEvent = {
+example_37: models.MessageCommerceReceivedWebhookEvent = {
     "id": "evt_example_167385",
     "type": "message.received",
     "provider": "whatsapp",
@@ -700,8 +832,7 @@ example_29: models.MessageCommerceReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_30: models.MessageCommerceUpdatedWebhookEvent = {
+example_38: models.MessageCommerceUpdatedWebhookEvent = {
     "id": "evt_example_169196",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -719,8 +850,7 @@ example_30: models.MessageCommerceUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_31: models.MessageCommerceUpdatedWebhookEvent = {
+example_39: models.MessageCommerceUpdatedWebhookEvent = {
     "id": "evt_example_170114",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -742,8 +872,7 @@ example_31: models.MessageCommerceUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_32: models.MessageCommerceHistoryWebhookEvent = {
+example_40: models.MessageCommerceHistoryWebhookEvent = {
     "id": "evt_example_171797",
     "type": "conversation.history",
     "provider": "whatsapp",
@@ -793,8 +922,7 @@ example_32: models.MessageCommerceHistoryWebhookEvent = {
         ],
     },
 }
-
-example_33: models.WhatsAppMessageDeviceWebhookEvent = {
+example_41: models.WhatsAppMessageDeviceWebhookEvent = {
     "id": "evt_example_174750",
     "type": "message.received",
     "provider": "whatsapp",
@@ -806,8 +934,7 @@ example_33: models.WhatsAppMessageDeviceWebhookEvent = {
         "message": {"id": "wa_message_example_001", "direction": "outbound", "text": "Example"},
     },
 }
-
-example_34: models.MessageReferralReceivedWebhookEvent = {
+example_42: models.MessageReferralReceivedWebhookEvent = {
     "id": "evt_example_176338",
     "type": "message.received",
     "provider": "whatsapp",
@@ -846,8 +973,7 @@ example_34: models.MessageReferralReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_35: models.MessageReferralReceivedWebhookEvent = {
+example_43: models.MessageReferralReceivedWebhookEvent = {
     "id": "evt_example_178242",
     "type": "message.received",
     "provider": "whatsapp",
@@ -864,8 +990,7 @@ example_35: models.MessageReferralReceivedWebhookEvent = {
         "event": {"kind": "message_received"},
     },
 }
-
-example_36: models.MessageReferralUpdatedWebhookEvent = {
+example_44: models.MessageReferralUpdatedWebhookEvent = {
     "id": "evt_example_179990",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -904,8 +1029,7 @@ example_36: models.MessageReferralUpdatedWebhookEvent = {
         "event": {"kind": "message_updated"},
     },
 }
-
-example_37: models.ConversationHistoryWebhookEvent = {
+example_45: models.ConversationHistoryWebhookEvent = {
     "id": "evt_example_183342",
     "type": "conversation.history",
     "provider": "whatsapp",
@@ -926,8 +1050,7 @@ example_37: models.ConversationHistoryWebhookEvent = {
         ],
     },
 }
-
-example_38: models.ConversationHistoryWebhookEvent = {
+example_46: models.ConversationHistoryWebhookEvent = {
     "id": "evt_example_184219",
     "type": "conversation.history",
     "provider": "whatsapp",
@@ -939,8 +1062,7 @@ example_38: models.ConversationHistoryWebhookEvent = {
         "messages": [],
     },
 }
-
-example_39: models.MessageReferralHistoryWebhookEvent = {
+example_47: models.MessageReferralHistoryWebhookEvent = {
     "id": "evt_example_185631",
     "type": "conversation.history",
     "provider": "whatsapp",
@@ -990,8 +1112,7 @@ example_39: models.MessageReferralHistoryWebhookEvent = {
         ],
     },
 }
-
-example_40: models.CallMessageReceivedWebhookEvent = {
+example_48: models.CallMessageReceivedWebhookEvent = {
     "id": "evt_example_call_offered_001",
     "type": "message.received",
     "provider": "whatsapp",
@@ -1008,8 +1129,7 @@ example_40: models.CallMessageReceivedWebhookEvent = {
         },
     },
 }
-
-example_41: models.CallMessageUpdatedWebhookEvent = {
+example_49: models.CallMessageUpdatedWebhookEvent = {
     "id": "evt_example_call_accepted_001",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -1029,8 +1149,7 @@ example_41: models.CallMessageUpdatedWebhookEvent = {
         },
     },
 }
-
-example_42: models.CallMessageUpdatedWebhookEvent = {
+example_50: models.CallMessageUpdatedWebhookEvent = {
     "id": "evt_example_call_ended_001",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -1046,8 +1165,7 @@ example_42: models.CallMessageUpdatedWebhookEvent = {
         },
     },
 }
-
-example_43: models.CallMessageUpdatedWebhookEvent = {
+example_51: models.CallMessageUpdatedWebhookEvent = {
     "id": "evt_example_call_ended_001",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -1061,8 +1179,7 @@ example_43: models.CallMessageUpdatedWebhookEvent = {
         }
     },
 }
-
-example_44: models.CallMessageUpdatedWebhookEvent = {
+example_52: models.CallMessageUpdatedWebhookEvent = {
     "id": "evt_example_call_ended_002",
     "type": "message.updated",
     "provider": "whatsapp",
@@ -1080,8 +1197,7 @@ example_44: models.CallMessageUpdatedWebhookEvent = {
         }
     },
 }
-
-example_45: models.WhatsAppAccountAuthFailedWebhookEvent = {
+example_53: models.WhatsAppAccountAuthFailedWebhookEvent = {
     "id": "evt_whatsapp_example_auth_failed",
     "type": "account.auth.failed",
     "provider": "whatsapp",
@@ -1102,8 +1218,7 @@ example_45: models.WhatsAppAccountAuthFailedWebhookEvent = {
         },
     },
 }
-
-example_46: models.AccountProfileUpdatedWebhookEvent = {
+example_54: models.AccountProfileUpdatedWebhookEvent = {
     "id": "evt_profile_7e91d2c4",
     "type": "account.profile.updated",
     "provider": "whatsapp",
@@ -1124,8 +1239,7 @@ example_46: models.AccountProfileUpdatedWebhookEvent = {
         },
     },
 }
-
-example_47: models.AccountProfileUpdatedWebhookEvent = {
+example_55: models.AccountProfileUpdatedWebhookEvent = {
     "id": "evt_profile_avatar_a21e7d9c",
     "type": "account.profile.updated",
     "provider": "whatsapp",
@@ -1145,8 +1259,7 @@ example_47: models.AccountProfileUpdatedWebhookEvent = {
         },
     },
 }
-
-example_48: models.AccountStartedWebhookEvent = {
+example_56: models.AccountStartedWebhookEvent = {
     "id": "evt_acc_2b3c4d5e6f",
     "type": "account.started",
     "provider": "whatsapp",

@@ -4,8 +4,8 @@
 
 ## Baseline
 
-The current contract is byte-for-byte aligned with approved public Node source `5901244`, SHA-256
-`47face9790a454fb0d6204721785846427ca7ead23cf854061ab54646682e904`. `parity/source.json` records an approved-source baseline; it does not claim an npm release of these capabilities.
+The current contract is byte-for-byte aligned with approved public Node source `ce60499`, SHA-256
+`8190a34dc8ed60476f79e00b37d9dea418082886724ee6d64efa389f440adffc`. `parity/source.json` records an approved-source baseline; it does not claim an npm release of these capabilities.
 
 Do not replace it directly with an internal service OpenAPI file. The public contract intentionally
 removes internal-only provider values and descriptions.

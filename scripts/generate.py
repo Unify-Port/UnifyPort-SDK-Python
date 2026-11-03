@@ -38,6 +38,14 @@ EXPECTED_POLICY_COUNTS = {
 JsonObject = dict[str, Any]
 
 
+class _ContractLoader(yaml.SafeLoader):  # type: ignore[misc]
+    """时间标量保留原文，避免 YAML 隐式转换为微秒精度的 datetime。"""
+
+
+# 仅修改专用 loader，保留其余安全解析规则，也不污染 PyYAML 的全局构造器。
+_ContractLoader.add_constructor("tag:yaml.org,2002:timestamp", _ContractLoader.construct_scalar)
+
+
 @dataclass(frozen=True, slots=True)
 class Parameter:
     name: str
@@ -76,7 +84,7 @@ def _object(value: Any, description: str) -> JsonObject:
 
 def _load_yaml(path: Path) -> JsonObject:
     # YAML 输入先收窄到 string-key object，避免生成逻辑默默接受异常节点。
-    return _object(yaml.safe_load(path.read_text(encoding="utf-8")), str(path))
+    return _object(yaml.load(path.read_text(encoding="utf-8"), Loader=_ContractLoader), str(path))
 
 
 def _load_json(path: Path) -> JsonObject:
@@ -1258,6 +1266,23 @@ def _generate_reference_index(operations: list[Operation], *, chinese: bool) -> 
     return "\n".join(lines)
 
 
+def _webhook_examples(document: JsonObject) -> list[JsonObject]:
+    # 样例与公开 contract 一起生成，避免新增渠道后手写 fixture 仍停留在旧基线。
+    result: list[JsonObject] = []
+    for name, webhook in _object(document.get("webhooks"), "webhooks").items():
+        content = webhook["post"]["requestBody"]["content"]["application/json"]
+        schema = str(content["schema"]["$ref"]).rsplit("/", 1)[1]
+        examples = dict(content.get("examples", {}))
+        if "example" in content:
+            examples["example"] = {"value": content["example"]}
+        for label, example in examples.items():
+            if "value" in example:
+                result.append(
+                    {"name": name + "/" + label, "schema": schema, "body": example["value"]}
+                )
+    return result
+
+
 def generate_artifacts() -> dict[Path, str]:
     document = _load_yaml(CONTRACT_PATH)
     policy = _load_json(POLICY_PATH)
@@ -1285,6 +1310,18 @@ def generate_artifacts() -> dict[Path, str]:
         GENERATED_DIR / "async_methods.py": _generate_methods(operations, asynchronous=True),
         MANIFEST_PATH: _generate_manifest(source, contract_sha, operations, schemas),
     }
+    examples = _webhook_examples(document)
+    artifacts[ROOT / "tests/fixtures/webhook-examples.json"] = json.dumps(examples, indent=2) + "\n"
+    artifacts[ROOT / "pyright_tests/webhook_examples.py"] = (
+        '"""Generated public Webhook examples; update the contract and regenerate."""\n\n'
+        "from unifyport import models\n\n"
+        "# 公开样例必须接受生成类型检查，保留稀疏字段和显式零值。\n"
+        + "\n".join(
+            f"example_{index}: models.{case['schema']} = {case['body']!r}"
+            for index, case in enumerate(examples)
+        )
+        + "\n"
+    )
     artifacts[ENGLISH_REFERENCE_DIR / "README.md"] = _generate_reference_index(
         operations, chinese=False
     )

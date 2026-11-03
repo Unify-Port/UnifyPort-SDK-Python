@@ -75,7 +75,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: Unify-Port/UnifyPort-SDK-Nodejs
-          ref: v0.4.0
+          # 固定已审查源码；先推送 Node 提交再运行此门禁，不将源码当作已发布包。
+          ref: ce60499d7169c860ed3f64a686e04bff44316f35
           fetch-depth: 0
           path: node-sdk
       - uses: actions/setup-python@v5
@@ -89,7 +90,7 @@ jobs:
       - name: Verify frozen Node baseline
         working-directory: python-sdk
         # 独立 checkout 防止本仓库相对路径或本机状态掩盖 upstream drift。
-        run: python scripts/check_node_parity.py --node-repo ../node-sdk --node-ref v0.4.0
+        run: python scripts/check_node_parity.py --node-repo ../node-sdk --node-ref ce60499d7169c860ed3f64a686e04bff44316f35
 
   package:
     needs: [quality, compatibility, node-parity]
